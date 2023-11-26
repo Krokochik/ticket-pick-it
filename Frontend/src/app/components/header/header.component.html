@@ -1,0 +1,15 @@
+<header [ngClass]="rootClass" class="text-bg-main select-none">
+    <div class="container {{rootClass}}__container">
+        <h2 class="{{rootClass}}__title">{{ title }}</h2>
+
+        <div *ngIf="!authorized" class="{{rootClass}}__auth text-wt-100">
+            <a routerLink="/auth/register" class="text-sz-s text-wt-500">
+                Sign up
+            </a>
+            or
+            <a routerLink="/auth/login" class="text-sz-xs text-accent text-wt-300">
+                Sign in
+            </a>
+        </div>
+    </div>
+</header>

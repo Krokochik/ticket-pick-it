@@ -1,0 +1,84 @@
+@import "variables"
+
+@mixin bg-main
+    background-color: map-get($color, "bg-main")
+
+@mixin bg-accent
+    background-color: map-get($color, "bg-accent")
+
+@mixin text-main
+    color: map-get($color, "main")
+
+@mixin text-accent
+    color: map-get($color, "accent")
+
+.text
+    &-main
+        @include text-main
+
+    &-accent
+        @include text-accent
+
+.bg
+    &-main
+        @include bg-main
+
+    &-accent
+        @include bg-accent
+
+.text-bg
+    &-main
+        @include text-main
+        @include bg-main
+
+    &-accent
+        @include text-accent
+        @include bg-accent
+
+.text-wt
+    &-100
+        font-weight: 100
+
+    &-200
+        font-weight: 200
+
+    &-300
+        font-weight: 300
+
+    &-400
+        font-weight: 400
+
+    &-500
+        font-weight: 500
+
+    &-600
+        font-weight: 600
+
+    &-700
+        font-weight: 700
+
+
+.text-sz
+    &-xxs
+        font-size: map-get($text-size, "xxs")
+
+    &-xs
+        font-size: map-get($text-size, "xs")
+
+    &-s
+        font-size: map-get($text-size, "s")
+
+    &-m
+        font-size: map-get($text-size, "m")
+
+    &-l
+        font-size: map-get($text-size, "l")
+
+    &-xl
+        font-size: map-get($text-size, "xl")
+
+    &-xxl
+        font-size: map-get($text-size, "xxl")
+
+.select-none
+    user-select: none

@@ -1,0 +1,14 @@
+@import "imports";
+
+:root {
+  font: {
+    family: Josefin Sans;
+    size: map-get($text-size, "xs")
+  }
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1024px;
+  margin: auto;
+}
