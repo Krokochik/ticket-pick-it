@@ -1,0 +1,21 @@
+<div class="container" [hidden]="!(ready && clinics)">
+    <div class="{{rootClass}}">
+        <h1 class="{{rootClass}}__title">Choose clinic</h1>
+        <input [(ngModel)]="searchText"
+               class="input {{rootClass}}__input"
+               placeholder="Search...">
+            <ng-container *ngIf="clinics && clinics.length > 0 && (clinics | filter: searchText).length > 0; else noResults">
+            <div class="{{rootClass}}__clinics">
+                <div *ngFor="let clinic of (clinics | filter: searchText)"
+                     (click)="router.navigate(['order/clinic/' + clinics.indexOf(clinic) + '/specialities/'])"
+                     class="{{rootClass}}__clinic">
+                    <span class="{{rootClass}}__name">{{ clinic.name }}</span>
+                    <span class="{{rootClass}}__address">{{ clinic.address }}</span>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #noResults>
+            <span class="{{rootClass}}__placeholder">Nothing was found :(</span>
+        </ng-template>
+    </div>
+</div>

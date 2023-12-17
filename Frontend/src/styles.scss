@@ -1,14 +1,165 @@
 @import "imports";
 
+* {
+    box-sizing: border-box;
+
+    font: {
+        family: Josefin Sans;
+        size: map-get($text-size, "xs")
+    }
+}
+
 :root {
-  font: {
-    family: Josefin Sans;
-    size: map-get($text-size, "xs")
-  }
-  box-sizing: border-box;
+    color: map-get($color, "bg-main");
 }
 
 .container {
-  max-width: 1024px;
-  margin: auto;
+    max-width: 1440px;
+    margin: auto;
 }
+
+.input {
+    border: 2px solid map-get($color, "bg-main");
+    border-radius: 18px;
+    padding: 10px 15px;
+    font-size: map-get($text-size, "s");
+
+    &:focus {
+        border: 2px solid map-get($color, "bg-main--light");
+    }
+
+    &_error {
+        border: 2px solid map-get($color, "red");
+
+        //&:focus {}
+    }
+}
+
+.checkgroup {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.checkbox {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    top: -1px;
+
+    input {
+        position: absolute;
+        display: none;
+    }
+
+    span {
+        display: block;
+        position: relative;
+        border-radius: 6px;
+        height: 22px;
+        width: 22px;
+        border: 2px solid map-get($color, "bg-main");
+        background-color: #eee;
+        transition: .1s ease-in-out;
+
+        &:after {
+            content: "";
+            position: relative;
+            display: none;
+            left: 6px;
+            top: 3px;
+            width: 4px;
+            height: 7px;
+            border: solid map-get($color, "accent");
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+    }
+
+    &:hover input ~ span {
+        background-color: #ccc;
+    }
+
+    & input:checked ~ span {
+        transition: .05s ease-in;
+        background-color: map-get($color, "bg-main--light");
+    }
+
+    & input:checked ~ span:after {
+        display: block;
+    }
+}
+
+
+.btn {
+    &_accent {
+        box-shadow: inset 2px 2px 2px 0 rgba(224, 118, 38, 0.5),
+        7px 7px 20px 0 rgba(0, 0, 0, .1),
+        4px 4px 5px 0 rgba(0, 0, 0, .1);
+
+        background: linear-gradient(10deg, map-get($color, "bg-accent--light") 10%,
+            map-get($color, "bg-accent") 100%);
+    }
+
+    border-radius: 18px;
+    padding: 12px 40px;
+    font-weight: 700;
+    font-size: map-get($text-size, "m");
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: inset 2px 2px 2px 0 rgba(39, 84, 164, 0.5),
+    7px 7px 20px 0 rgba(0, 0, 0, .1),
+    4px 4px 5px 0 rgba(0, 0, 0, .1);
+    outline: none;
+    border: none;
+    background: linear-gradient(30deg, map-get($color, "bg-main") 5%,
+        map-get($color, "bg-main--light") 100%);
+    color: map-get($color, "accent");
+    overflow: hidden;
+
+    &:before {
+        position: absolute;
+        content: '';
+        display: inline-block;
+        top: -180px;
+        left: 0;
+        width: 30px;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.4);
+        animation: shiny-btn 3.5s ease-in-out infinite;
+    }
+
+    &:hover {
+        opacity: .9;
+    }
+
+    &:active {
+        box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, .3),
+        -4px -4px 6px 0 rgba(116, 125, 136, .2),
+        inset -4px -4px 6px 0 rgba(255, 255, 255, .2),
+        inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+    }
+}
+
+
+@keyframes shiny-btn {
+    0% {
+        transform: scale(0) rotate(45deg);
+        opacity: 0;
+    }
+    80% {
+        transform: scale(0) rotate(45deg);
+        opacity: 0.5;
+    }
+    81% {
+        transform: scale(4) rotate(45deg);
+        opacity: .8;
+    }
+    100% {
+        transform: scale(50) rotate(45deg);
+        opacity: 0;
+    }
+}
+

@@ -1,0 +1,22 @@
+@import "variables";
+
+$component: ".app-clinic-info";
+
+#{$component} {
+    text-align: left;
+    margin: auto auto 20px;
+
+    &, & > * {
+        width: fit-content;
+    }
+
+    &__title {
+        margin-bottom: 5px;
+    }
+
+    &__address, &__phone {
+        display: block;
+        font-size: map-get($text-size, "xxs");
+        margin-left: 5px;
+    }
+}

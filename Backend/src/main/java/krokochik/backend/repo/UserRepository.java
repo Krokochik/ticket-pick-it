@@ -1,82 +1,98 @@
 package krokochik.backend.repo;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import jakarta.annotation.PostConstruct;
-import lombok.AllArgsConstructor;
+import com.google.gson.reflect.TypeToken;
+import krokochik.backend.model.SerializableUser;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.val;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Type;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 @Slf4j
 @Repository
-public class UserRepository {
-    private String storagePath = System.getProperty("java.io.tmpdir");
-    private List<User> users = new ArrayList<>();
+public class UserRepository extends BaseRepositoryImpl<Set<SerializableUser>> {
+    UserRepository(Gson gson,
+                   ApplicationArguments args) {
+        super(gson, args, new HashSet<>());
+    }
 
-    @Autowired
-    private ApplicationArguments args;
+    @Override
+    public String getName() {
+        return "users";
+    }
 
-    @Autowired
-    private Gson gson;
-
-    @PostConstruct
-    private void init() {
-        if (args.getOptionValues("storage") != null)
-            storagePath = args.getOptionValues("storage").get(0);
-        if (args.getNonOptionArgs().contains("-renew") ||
-                (args.getOptionValues("renew") != null &&
-                        args.getOptionValues("renew").contains("users"))) {
-            saveUsersToFile();
-        } else loadUsersFromFile();
+    @Override
+    protected Type getDataType() {
+        return new TypeToken<Set<SerializableUser>>() {}.getType();
     }
 
     public void save(User user) {
-        users.add(user);
-        saveUsersToFile();
+        data.add(new SerializableUser(
+                user.getUsername(), user.getPassword()));
+        saveDataToFile();
     }
 
     public User findByUsername(String username) {
-        loadUsersFromFile();
-        return users.stream()
+        loadDataFromFile();
+        val sUser = data.stream()
                 .filter(user -> user.getUsername().equals(username))
                 .findFirst()
                 .orElse(null);
+        return toUsers(sUser)[0];
     }
 
-    public User[] getAllUsers() {
-        return this.users.toArray(User[]::new);
+    public SerializableUser[] getAllUsers() {
+        return this.data.toArray(SerializableUser[]::new);
     }
 
-    @Async void saveUsersToFile() {
-        log.info("Start exporting users");
-        try (Writer writer = new FileWriter(storagePath + "/users.dat")) {
-            gson.toJson(users, writer);
-            log.info("Data is successfully written to " + storagePath + "/users.dat");
-        } catch (IOException e) {
-            log.error(e.toString());
-        }
-    }
-
-    @Async void loadUsersFromFile() {
-        log.info("Start importing users");
-        try (Reader reader = new FileReader(storagePath + "/users.dat")) {
-            User[] usersArray = gson.fromJson(reader, User[].class);
-            if (usersArray != null) {
-                users = new ArrayList<>(List.of(usersArray));
-                log.info("Users are successfully read from file " + storagePath + "/users.dat");
-            } else {
-                log.error("Something went wrong during import");
+    private User[] toUsers(SerializableUser... sUsers) {
+        User[] users = new User[sUsers.length];
+        for (int i = 0; i < sUsers.length; i++) {
+            val sUser = sUsers[i];
+            if (sUser == null) {
+                users[i] = null;
+                continue;
             }
-        } catch (IOException e) {
-            log.error(e.toString());
+            users[i] = new User(
+                    sUser.getUsername(),
+                    sUser.getPassword(),
+                    Collections.singleton(
+                            new SimpleGrantedAuthority("USER")));
+        }
+        return users;
+    }
+
+    @Override
+    public Future<Boolean> loadDataFromFile() {
+        log.info("Start importing data");
+        File file = new File(storagePath + "/" + getName() + ".dat");
+        try (Reader reader = new FileReader(file)) {
+            final SerializableUser[] usersArray = gson.fromJson(reader, SerializableUser[].class);
+            if (usersArray != null) {
+                data = new HashSet<>(Set.of(usersArray));
+                log.info("Data imported from " + file.getAbsolutePath());
+                return CompletableFuture.completedFuture(true);
+            } else {
+                log.warn("Something went wrong during import data from " + file.getAbsolutePath());
+                return CompletableFuture.completedFuture(false);
+            }
+        } catch (FileNotFoundException e) {
+            log.warn("Something went wrong during import data from " +
+                    file.getAbsolutePath() + " : File not found");
+            return CompletableFuture.completedFuture(false);
+        } catch (Exception e) {
+            log.error("Something went wrong during import data from " +
+                    file.getAbsolutePath(), e);
+            return CompletableFuture.completedFuture(false);
         }
     }
 }

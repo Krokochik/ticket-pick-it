@@ -1,8 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterLink, RouterOutlet} from '@angular/router';
+import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {HeaderComponent} from "./components/header/header.component";
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpParams} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpErrorResponse, HttpParams} from "@angular/common/http";
+import {AuthService} from "./services/AuthService";
 
 @Component({
     selector: 'app-root',
@@ -10,19 +11,20 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpParams} from "@angu
     imports: [CommonModule, RouterOutlet,
         HeaderComponent, RouterLink,
         HttpClientModule],
+    providers: [
+        HttpClientModule, AuthService
+    ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
     title = 'TicketPickIt';
 
-    constructor(private http: HttpClient) {
+    constructor(public router: Router,
+                private authService: AuthService) {
+        authService.checkAuthentication();
     }
 
     ngOnInit() {
-        this.http.post<any>("/server/auth/login", new HttpParams()
-            .set("username", "God")
-            .set("password", "root"))
-            .subscribe(data => console.log(data));
     }
 }

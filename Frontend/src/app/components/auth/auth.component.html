@@ -1,0 +1,48 @@
+<div class="container" *ngIf="ready">
+    <div class="{{rootClass}}">
+        <h1>Login</h1>
+
+
+        <form [formGroup]="form" class="{{rootClass}}__inputs">
+            <div *ngIf="error" class="{{rootClass}}__error">
+                <span>{{ error }}</span>
+            </div>
+            <input formControlName="username"
+                   type="text" placeholder="Username"
+                   class="input {{rootClass}}__input  {{username().errors && username().touched ? 'input_error' : ''}}" autofocus>
+            <input formControlName="password"
+                   [type]="showPass? 'text' : 'password'" placeholder="Password"
+                   class="input {{rootClass}}__input {{password().errors && password().touched ? 'input_error' : ''}}">
+
+            <div class="{{rootClass}}__checkboxes">
+                <div class="checkgroup">
+                    <label class="checkbox">
+                        <input [(ngModel)]="showPass"
+                               [ngModelOptions]="{standalone: true}"
+                               type="checkbox">
+                        <span></span>
+                    </label>
+                    <span>Show password</span>
+                </div>
+                <div class="checkgroup">
+                    <label class="checkbox">
+                        <input [(ngModel)]="remember"
+                               [ngModelOptions]="{standalone: true}"
+                               type="checkbox">
+                        <span></span>
+                    </label>
+                    <span>Remember me</span>
+                </div>
+            </div>
+        </form>
+
+        <div class="{{rootClass}}__buttons">
+            <button (click)="login()" class="btn btn_accent {{rootClass}}__btn">
+                Login
+            </button>
+            <button (click)="register()" class="btn {{rootClass}}__btn">
+                Signup
+            </button>
+        </div>
+    </div>
+</div>

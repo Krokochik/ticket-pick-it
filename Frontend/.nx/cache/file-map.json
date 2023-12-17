@@ -7,17 +7,21 @@
     "@angular/compiler": "^17.0.0",
     "@angular/core": "^17.0.0",
     "@angular/forms": "^17.0.0",
+    "@angular/localize": "^17.0.4",
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
     "@nrwl/angular": "^17.1.3",
+    "file-saver": "^2.0.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2",
     "@angular-devkit/build-angular": "^17.0.2",
     "@angular/cli": "^17.0.2",
     "@angular/compiler-cli": "^17.0.0",
+    "@types/file-saver": "^2.0.7",
     "@types/jasmine": "~5.1.0",
+    "@types/karma": "^6.3.8",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -37,19 +41,19 @@
         },
         {
           "file": ".nx/cache/file-map.json",
-          "hash": "9098040830177045001"
+          "hash": "8890653845609421963"
         },
         {
           "file": ".nx/cache/lockfile.hash",
-          "hash": "2554952944634752494"
+          "hash": "12180081548923685170"
         },
         {
           "file": ".nx/cache/parsed-lock-file.json",
-          "hash": "2325956857351387443"
+          "hash": "18080131862728246584"
         },
         {
           "file": ".nx/cache/project-graph.json",
-          "hash": "13796713189967297782"
+          "hash": "15030897580814776671"
         },
         {
           "file": "README.md",
@@ -57,32 +61,36 @@
         },
         {
           "file": "angular.json",
-          "hash": "1555767013903363543"
+          "hash": "17488914334094933592"
         },
         {
           "file": "package-lock.json",
-          "hash": "8854841325340502280"
+          "hash": "9019198091843615133"
         },
         {
           "file": "package.json",
-          "hash": "17181620777576461500",
+          "hash": "556151811234277044",
           "deps": [
             "npm:@angular/animations",
             "npm:@angular/common",
             "npm:@angular/compiler",
             "npm:@angular/core",
             "npm:@angular/forms",
+            "npm:@angular/localize",
             "npm:@angular/platform-browser",
             "npm:@angular/platform-browser-dynamic",
             "npm:@angular/router",
             "npm:@nrwl/angular",
+            "npm:file-saver",
             "npm:rxjs",
             "npm:tslib",
             "npm:zone.js",
             "npm:@angular-devkit/build-angular",
             "npm:@angular/cli",
             "npm:@angular/compiler-cli",
+            "npm:@types/file-saver",
             "npm:@types/jasmine",
+            "npm:@types/karma",
             "npm:jasmine-core",
             "npm:karma",
             "npm:karma-chrome-launcher",
@@ -93,8 +101,12 @@
           ]
         },
         {
+          "file": "proxy.conf.json",
+          "hash": "338586196777790312"
+        },
+        {
           "file": "src/app/app.component.html",
-          "hash": "13145161401764563881"
+          "hash": "4280201651692631500"
         },
         {
           "file": "src/app/app.component.scss",
@@ -102,7 +114,7 @@
         },
         {
           "file": "src/app/app.component.ts",
-          "hash": "10703139399493195033",
+          "hash": "12214813163280419552",
           "deps": [
             "npm:@angular/core",
             "npm:@angular/common",
@@ -111,7 +123,7 @@
         },
         {
           "file": "src/app/app.config.ts",
-          "hash": "11075643926160926302",
+          "hash": "16827017998219163891",
           "deps": [
             "npm:@angular/core",
             "npm:@angular/router",
@@ -120,22 +132,102 @@
         },
         {
           "file": "src/app/app.routes.ts",
-          "hash": "9433147426923167400",
+          "hash": "8305046496496114082",
           "deps": [
             "npm:@angular/router"
           ]
         },
         {
+          "file": "src/app/components/account/account.component.html",
+          "hash": "15195065512304412681"
+        },
+        {
+          "file": "src/app/components/account/account.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/components/account/account.component.ts",
+          "hash": "18091576276739209988",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "src/app/components/auth/auth.component.html",
+          "hash": "10023049908783751920"
+        },
+        {
+          "file": "src/app/components/auth/auth.component.scss",
+          "hash": "145311427933516504"
+        },
+        {
+          "file": "src/app/components/auth/auth.component.ts",
+          "hash": "5249345343955078132",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/forms",
+            "npm:rxjs",
+            "npm:karma",
+            "npm:@angular/router",
+            "npm:@angular-devkit/build-angular"
+          ]
+        },
+        {
+          "file": "src/app/components/clinic-info/clinic-info.component.html",
+          "hash": "15449786917393102333"
+        },
+        {
+          "file": "src/app/components/clinic-info/clinic-info.component.scss",
+          "hash": "1209791894603330224"
+        },
+        {
+          "file": "src/app/components/clinic-info/clinic-info.component.ts",
+          "hash": "1670721448126416361",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "src/app/components/clinics/clinics.component.html",
+          "hash": "14586737649121586332"
+        },
+        {
+          "file": "src/app/components/clinics/clinics.component.scss",
+          "hash": "11222041215490626885"
+        },
+        {
+          "file": "src/app/components/clinics/clinics.component.ts",
+          "hash": "6906043145808124000",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router",
+            "npm:rxjs",
+            "npm:@angular/forms"
+          ]
+        },
+        {
+          "file": "src/app/components/component.ts",
+          "hash": "4124859717598708224",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
           "file": "src/app/components/header/header.component.html",
-          "hash": "14369039271679008"
+          "hash": "4987459310486611635"
         },
         {
           "file": "src/app/components/header/header.component.scss",
-          "hash": "8689959900369143967"
+          "hash": "12996040563643395545"
         },
         {
           "file": "src/app/components/header/header.component.ts",
-          "hash": "17300038481026533076",
+          "hash": "16857650227185233772",
           "deps": [
             "npm:@angular/core",
             "npm:@angular/common",
@@ -143,12 +235,84 @@
           ]
         },
         {
-          "file": "src/app/service/AuthInterceptor.ts",
+          "file": "src/app/components/medics/medics.component.html",
+          "hash": "3958146919776335915"
+        },
+        {
+          "file": "src/app/components/medics/medics.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/components/medics/medics.component.ts",
+          "hash": "643324187529121517",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router",
+            "npm:@angular/forms",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "src/app/components/order/order.component.html",
+          "hash": "9109046518157279074"
+        },
+        {
+          "file": "src/app/components/order/order.component.scss",
+          "hash": "11464405178159530246"
+        },
+        {
+          "file": "src/app/components/order/order.component.ts",
+          "hash": "12581539706665057325",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "src/app/components/specialities/specialities.component.html",
+          "hash": "15605194467705739001"
+        },
+        {
+          "file": "src/app/components/specialities/specialities.component.scss",
+          "hash": "4935440839730797918"
+        },
+        {
+          "file": "src/app/components/specialities/specialities.component.ts",
+          "hash": "1468397031134182203",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router",
+            "npm:@angular/forms"
+          ]
+        },
+        {
+          "file": "src/app/pipes/filter.pipe.ts",
+          "hash": "9576436838781478127",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "src/app/services/AuthInterceptor.ts",
           "hash": "1485693424953309433",
           "deps": [
             "npm:@angular/common",
             "npm:@angular/core",
             "npm:rxjs"
+          ]
+        },
+        {
+          "file": "src/app/services/AuthService.ts",
+          "hash": "9756346833602808242",
+          "deps": [
+            "npm:@angular/common",
+            "npm:@angular/core",
+            "npm:rxjs",
+            "npm:@angular-devkit/build-angular"
           ]
         },
         {
@@ -161,34 +325,34 @@
         },
         {
           "file": "src/imports.sass",
-          "hash": "3052376682441559615"
+          "hash": "17494367689241282944"
         },
         {
           "file": "src/index.html",
-          "hash": "10678862650812856667"
+          "hash": "17205607914568307826"
         },
         {
           "file": "src/main.ts",
-          "hash": "4927504514031276065",
+          "hash": "15820264318967352480",
           "deps": [
             "npm:@angular/platform-browser"
           ]
         },
         {
           "file": "src/reset.scss",
-          "hash": "15147941585777881685"
+          "hash": "16939225212956937749"
         },
         {
           "file": "src/shortcuts.sass",
-          "hash": "16827990077108492231"
+          "hash": "16913445072600656456"
         },
         {
           "file": "src/styles.scss",
-          "hash": "5420864465846788880"
+          "hash": "4725942272186317225"
         },
         {
           "file": "src/variables.scss",
-          "hash": "5750755608227722181"
+          "hash": "2997276680673165084"
         },
         {
           "file": "tsconfig.app.json",
@@ -196,7 +360,7 @@
         },
         {
           "file": "tsconfig.json",
-          "hash": "7395750907473791462"
+          "hash": "9008519475865335571"
         },
         {
           "file": "tsconfig.spec.json",

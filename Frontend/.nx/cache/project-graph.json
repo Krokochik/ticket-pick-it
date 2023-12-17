@@ -65,6 +65,9 @@
           },
           "serve": {
             "executor": "@angular-devkit/build-angular:dev-server",
+            "options": {
+              "proxyConfig": "proxy.conf.json"
+            },
             "configurations": {
               "production": {
                 "buildTarget": "TicketPickIt:build:production"
@@ -73,8 +76,7 @@
                 "buildTarget": "TicketPickIt:build:development"
               }
             },
-            "defaultConfiguration": "development",
-            "options": {}
+            "defaultConfiguration": "development"
           },
           "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -243,6 +245,15 @@
         "version": "17.0.4",
         "packageName": "@angular/forms",
         "hash": "sha512-R5J87dfJNWwi5SESD7tRkZnqG4u8KNAT4vImX4oG70/6vWioKUSWpLoSp1gpzy9UW51E85AKb8DNvIex7LclSg=="
+      }
+    },
+    "npm:@angular/localize": {
+      "type": "npm",
+      "name": "npm:@angular/localize",
+      "data": {
+        "version": "17.0.4",
+        "packageName": "@angular/localize",
+        "hash": "sha512-4kLvkwAI9lVaxKzMVjF/0do/Xfn4r3W1bk9Xzb7fYLS21wz11ouL0aV7umtHT5DOZiwkY/F8rOYaJm5Fkz8ubw=="
       }
     },
     "npm:@angular/platform-browser": {
@@ -3809,6 +3820,15 @@
         "hash": "sha512-OaJ7XLaelTgrvlZD8/aa0vvvxZdUmlCn6MtWeB7TkiKW70BQLc9XEPpDLPdbo52ZhXUCrznlWdCHWxJWtdyajA=="
       }
     },
+    "npm:@types/file-saver": {
+      "type": "npm",
+      "name": "npm:@types/file-saver",
+      "data": {
+        "version": "2.0.7",
+        "packageName": "@types/file-saver",
+        "hash": "sha512-dNKVfHd/jk0SkR/exKGj2ggkB45MAkzvWCaqLUUgkyjITkGNzH8H+yUwr+BLJUBjZOe9w8X3wgmXhZDRg1ED6A=="
+      }
+    },
     "npm:@types/graceful-fs": {
       "type": "npm",
       "name": "npm:@types/graceful-fs",
@@ -3879,6 +3899,15 @@
         "version": "7.0.15",
         "packageName": "@types/json-schema",
         "hash": "sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA=="
+      }
+    },
+    "npm:@types/karma": {
+      "type": "npm",
+      "name": "npm:@types/karma",
+      "data": {
+        "version": "6.3.8",
+        "packageName": "@types/karma",
+        "hash": "sha512-+QGoOPhb1f6Oli8pG+hxdnGDzVhIrpsHaFSJ4UJg15Xj+QBtluKELkJY+L4Li532HmT3l5K5o1FoUZHRQeOOaQ=="
       }
     },
     "npm:@types/mime": {
@@ -6723,6 +6752,15 @@
         "version": "6.0.1",
         "packageName": "file-entry-cache",
         "hash": "sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg=="
+      }
+    },
+    "npm:file-saver": {
+      "type": "npm",
+      "name": "npm:file-saver",
+      "data": {
+        "version": "2.0.5",
+        "packageName": "file-saver",
+        "hash": "sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA=="
       }
     },
     "npm:filelist": {
@@ -11210,6 +11248,11 @@
       },
       {
         "source": "TicketPickIt",
+        "target": "npm:@angular/localize",
+        "type": "static"
+      },
+      {
+        "source": "TicketPickIt",
         "target": "npm:@angular/platform-browser",
         "type": "static"
       },
@@ -11226,6 +11269,11 @@
       {
         "source": "TicketPickIt",
         "target": "npm:@nrwl/angular",
+        "type": "static"
+      },
+      {
+        "source": "TicketPickIt",
+        "target": "npm:file-saver",
         "type": "static"
       },
       {
@@ -11260,7 +11308,17 @@
       },
       {
         "source": "TicketPickIt",
+        "target": "npm:@types/file-saver",
+        "type": "static"
+      },
+      {
+        "source": "TicketPickIt",
         "target": "npm:@types/jasmine",
+        "type": "static"
+      },
+      {
+        "source": "TicketPickIt",
+        "target": "npm:@types/karma",
         "type": "static"
       },
       {
@@ -11327,6 +11385,11 @@
       {
         "source": "npm:@angular-devkit/build-angular",
         "target": "npm:@angular/compiler-cli",
+        "type": "static"
+      },
+      {
+        "source": "npm:@angular-devkit/build-angular",
+        "target": "npm:@angular/localize",
         "type": "static"
       },
       {
@@ -11982,6 +12045,33 @@
       {
         "source": "npm:@angular/forms",
         "target": "npm:tslib",
+        "type": "static"
+      }
+    ],
+    "npm:@angular/localize": [
+      {
+        "source": "npm:@angular/localize",
+        "target": "npm:@angular/compiler",
+        "type": "static"
+      },
+      {
+        "source": "npm:@angular/localize",
+        "target": "npm:@angular/compiler-cli",
+        "type": "static"
+      },
+      {
+        "source": "npm:@angular/localize",
+        "target": "npm:@babel/core",
+        "type": "static"
+      },
+      {
+        "source": "npm:@angular/localize",
+        "target": "npm:fast-glob",
+        "type": "static"
+      },
+      {
+        "source": "npm:@angular/localize",
+        "target": "npm:yargs",
         "type": "static"
       }
     ],
@@ -16816,6 +16906,18 @@
       {
         "source": "npm:@types/istanbul-reports",
         "target": "npm:@types/istanbul-lib-report",
+        "type": "static"
+      }
+    ],
+    "npm:@types/karma": [
+      {
+        "source": "npm:@types/karma",
+        "target": "npm:@types/node",
+        "type": "static"
+      },
+      {
+        "source": "npm:@types/karma",
+        "target": "npm:log4js",
         "type": "static"
       }
     ],

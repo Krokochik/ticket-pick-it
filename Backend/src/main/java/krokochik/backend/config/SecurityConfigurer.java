@@ -1,5 +1,6 @@
 package krokochik.backend.config;
 
+import krokochik.backend.repo.RememberMeTokenRepository;
 import krokochik.backend.repo.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authorization.AuthorityAuthorizationDecision;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +23,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.Date;
 
 @Slf4j
 @Configuration
@@ -31,6 +41,9 @@ public class SecurityConfigurer {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RememberMeTokenRepository tokenRepository;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -61,17 +74,29 @@ public class SecurityConfigurer {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/ping").permitAll()
+                        .requestMatchers(HttpMethod.GET)
+                            .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/signup")
+                            .access((auth, o) ->
+                                new AuthorizationDecision(
+                                        auth.get().getAuthorities()
+                                                .contains(new SimpleGrantedAuthority("ROLE_ANONYMOUS"))
+                                ))
+                        .requestMatchers(HttpMethod.POST, "/ping")
+                            .permitAll()
                         .anyRequest().authenticated()
                 );
 
-        System.out.println(args);
         if ((args.getOptionValues("csrf") == null ||
                 !args.getOptionValues("csrf").contains("on")) &&
                 !args.getNonOptionArgs().contains("-csrf")) {
             http.csrf(AbstractHttpConfigurer::disable);
-        } else log.info("CSRF protection enabled");
+        } else {
+            http.csrf(conf -> conf
+                    .csrfTokenRepository(CookieCsrfTokenRepository
+                            .withHttpOnlyFalse()));
+            log.info("CSRF protection enabled");
+        }
 
         if ((args.getOptionValues("cors") == null ||
                 !args.getOptionValues("cors").contains("on")) &&
@@ -93,6 +118,12 @@ public class SecurityConfigurer {
                 .defaultSuccessUrl("/auth/success")
                 .permitAll());
         http.logout(LogoutConfigurer::permitAll);
+
+        http.rememberMe(conf -> conf
+                .rememberMeParameter("remember")
+                .useSecureCookie(true)
+                .userDetailsService(userDetailsService())
+                .tokenRepository(tokenRepository));
         return http.build();
     }
 }
