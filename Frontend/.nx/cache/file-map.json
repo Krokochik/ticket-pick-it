@@ -1,0 +1,476 @@
+{
+  "version": "6.0",
+  "nxVersion": "17.1.3",
+  "deps": {
+    "@angular/animations": "^17.0.0",
+    "@angular/common": "^17.0.0",
+    "@angular/compiler": "^17.0.0",
+    "@angular/core": "^17.0.0",
+    "@angular/forms": "^17.0.0",
+    "@angular/localize": "^17.0.4",
+    "@angular/platform-browser": "^17.0.0",
+    "@angular/platform-browser-dynamic": "^17.0.0",
+    "@angular/router": "^17.0.0",
+    "@ngneat/dialog": "^5.0.0",
+    "@nrwl/angular": "^17.1.3",
+    "angular-calendar": "^0.31.0",
+    "date-fns": "^3.0.0",
+    "file-saver": "^2.0.5",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.2",
+    "@angular-devkit/build-angular": "^17.0.2",
+    "@angular/cli": "^17.0.2",
+    "@angular/compiler-cli": "^17.0.0",
+    "@types/file-saver": "^2.0.7",
+    "@types/jasmine": "~5.1.0",
+    "@types/karma": "^6.3.8",
+    "jasmine-core": "~5.1.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.2.2"
+  },
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "projectFileMap": {
+      "TicketPickIt": [
+        {
+          "file": ".editorconfig",
+          "hash": "14613429711932917764"
+        },
+        {
+          "file": ".nx/cache/file-map.json",
+          "hash": "10835763374337993843"
+        },
+        {
+          "file": ".nx/cache/lockfile.hash",
+          "hash": "2251067820446147282"
+        },
+        {
+          "file": ".nx/cache/parsed-lock-file.json",
+          "hash": "9002102926544911570"
+        },
+        {
+          "file": ".nx/cache/project-graph.json",
+          "hash": "11110309109599921230"
+        },
+        {
+          "file": "README.md",
+          "hash": "10193437956071939871"
+        },
+        {
+          "file": "angular.json",
+          "hash": "17488914334094933592"
+        },
+        {
+          "file": "package-lock.json",
+          "hash": "12062969997220264758"
+        },
+        {
+          "file": "package.json",
+          "hash": "1323840062269419508",
+          "deps": [
+            "npm:@angular/animations",
+            "npm:@angular/common",
+            "npm:@angular/compiler",
+            "npm:@angular/core",
+            "npm:@angular/forms",
+            "npm:@angular/localize",
+            "npm:@angular/platform-browser",
+            "npm:@angular/platform-browser-dynamic",
+            "npm:@angular/router",
+            "npm:@ngneat/dialog",
+            "npm:@nrwl/angular",
+            "npm:angular-calendar",
+            "npm:date-fns",
+            "npm:file-saver",
+            "npm:rxjs",
+            "npm:tslib",
+            "npm:zone.js",
+            "npm:@angular-devkit/build-angular",
+            "npm:@angular/cli",
+            "npm:@angular/compiler-cli",
+            "npm:@types/file-saver",
+            "npm:@types/jasmine",
+            "npm:@types/karma",
+            "npm:jasmine-core",
+            "npm:karma",
+            "npm:karma-chrome-launcher",
+            "npm:karma-coverage",
+            "npm:karma-jasmine",
+            "npm:karma-jasmine-html-reporter",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "proxy.conf.json",
+          "hash": "338586196777790312"
+        },
+        {
+          "file": "src/app/app.component.html",
+          "hash": "4280201651692631500"
+        },
+        {
+          "file": "src/app/app.component.ts",
+          "hash": "6338250357831062188",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "src/app/app.config.ts",
+          "hash": "2158398917262180790",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router",
+            "npm:@angular/common",
+            "npm:angular-calendar"
+          ]
+        },
+        {
+          "file": "src/app/app.routes.ts",
+          "hash": "3912390186878513754",
+          "deps": [
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "src/app/components/account/account.component.html",
+          "hash": "15195065512304412681"
+        },
+        {
+          "file": "src/app/components/account/account.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/app/components/account/account.component.ts",
+          "hash": "18091576276739209988",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "src/app/components/auth/auth.component.html",
+          "hash": "15363221211059010542"
+        },
+        {
+          "file": "src/app/components/auth/auth.component.scss",
+          "hash": "145311427933516504"
+        },
+        {
+          "file": "src/app/components/auth/auth.component.ts",
+          "hash": "10359800131566753631",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/forms",
+            "npm:rxjs",
+            "npm:karma",
+            "npm:@angular/router",
+            "npm:@angular-devkit/build-angular"
+          ]
+        },
+        {
+          "file": "src/app/components/calendar/angular-calendar-override.scss",
+          "hash": "15570782394095932363"
+        },
+        {
+          "file": "src/app/components/calendar/calendar.component.html",
+          "hash": "11768566604542165015"
+        },
+        {
+          "file": "src/app/components/calendar/calendar.component.scss",
+          "hash": "13941227287965668165"
+        },
+        {
+          "file": "src/app/components/calendar/calendar.component.ts",
+          "hash": "11482022591569909233",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:angular-calendar",
+            "npm:date-fns",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "src/app/components/clinic-info/clinic-info.component.html",
+          "hash": "15449786917393102333"
+        },
+        {
+          "file": "src/app/components/clinic-info/clinic-info.component.scss",
+          "hash": "1209791894603330224"
+        },
+        {
+          "file": "src/app/components/clinic-info/clinic-info.component.ts",
+          "hash": "1670721448126416361",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "src/app/components/clinics/clinics.component.html",
+          "hash": "7960141850600037702"
+        },
+        {
+          "file": "src/app/components/clinics/clinics.component.scss",
+          "hash": "8821107466111314171"
+        },
+        {
+          "file": "src/app/components/clinics/clinics.component.ts",
+          "hash": "1003745524591077532",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router",
+            "npm:rxjs",
+            "npm:@angular/forms"
+          ]
+        },
+        {
+          "file": "src/app/components/component.ts",
+          "hash": "4124859717598708224",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "src/app/components/dialog/booking-confirmation-dialog.component.html",
+          "hash": "16678048313779482244"
+        },
+        {
+          "file": "src/app/components/dialog/booking-confirmation-dialog.component.scss",
+          "hash": "2271168659733577387"
+        },
+        {
+          "file": "src/app/components/dialog/booking-confirmation-dialog.component.ts",
+          "hash": "11803088056663248969",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@ngneat/dialog"
+          ]
+        },
+        {
+          "file": "src/app/components/header/header.component.html",
+          "hash": "4987459310486611635"
+        },
+        {
+          "file": "src/app/components/header/header.component.scss",
+          "hash": "12996040563643395545"
+        },
+        {
+          "file": "src/app/components/header/header.component.ts",
+          "hash": "16857650227185233772",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "src/app/components/loader/loader.component.html",
+          "hash": "15973529283489430152"
+        },
+        {
+          "file": "src/app/components/loader/loader.component.scss",
+          "hash": "11034102922077867834"
+        },
+        {
+          "file": "src/app/components/loader/loader.component.ts",
+          "hash": "2415451708542154865",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "src/app/components/medics/medics.component.html",
+          "hash": "11766923507790540916"
+        },
+        {
+          "file": "src/app/components/medics/medics.component.scss",
+          "hash": "14382069075234858580"
+        },
+        {
+          "file": "src/app/components/medics/medics.component.ts",
+          "hash": "17248162173018652766",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router",
+            "npm:@angular/forms",
+            "npm:rxjs",
+            "npm:@angular/cli"
+          ]
+        },
+        {
+          "file": "src/app/components/order/order.component.html",
+          "hash": "9109046518157279074"
+        },
+        {
+          "file": "src/app/components/order/order.component.scss",
+          "hash": "11464405178159530246"
+        },
+        {
+          "file": "src/app/components/order/order.component.ts",
+          "hash": "1327182886984956496",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "src/app/components/specialities/specialities.component.html",
+          "hash": "15605194467705739001"
+        },
+        {
+          "file": "src/app/components/specialities/specialities.component.scss",
+          "hash": "4935440839730797918"
+        },
+        {
+          "file": "src/app/components/specialities/specialities.component.ts",
+          "hash": "14161189130115190638",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router",
+            "npm:@angular/forms"
+          ]
+        },
+        {
+          "file": "src/app/components/time-select/time-select.component.html",
+          "hash": "17318715487792007740"
+        },
+        {
+          "file": "src/app/components/time-select/time-select.component.scss",
+          "hash": "2754880671051312051"
+        },
+        {
+          "file": "src/app/components/time-select/time-select.component.ts",
+          "hash": "2676575041480537234",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router",
+            "npm:@ngneat/dialog"
+          ]
+        },
+        {
+          "file": "src/app/pipes/filter.pipe.ts",
+          "hash": "9576436838781478127",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "src/app/services/AuthInterceptor.ts",
+          "hash": "1485693424953309433",
+          "deps": [
+            "npm:@angular/common",
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "src/app/services/AuthService.ts",
+          "hash": "14898777851465209825",
+          "deps": [
+            "npm:@angular/common",
+            "npm:@angular/core",
+            "npm:rxjs",
+            "npm:@angular-devkit/build-angular"
+          ]
+        },
+        {
+          "file": "src/app/services/DataService.ts",
+          "hash": "13689979805033618018",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "src/app/services/NetService.ts",
+          "hash": "2414594141195779888",
+          "deps": [
+            "npm:@angular/common",
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "src/assets/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/assets/images/left-arrow.svg",
+          "hash": "71566297315352672"
+        },
+        {
+          "file": "src/assets/images/right-arrow.svg",
+          "hash": "5664942893269770502"
+        },
+        {
+          "file": "src/favicon.ico",
+          "hash": "3988961587069885523"
+        },
+        {
+          "file": "src/imports.sass",
+          "hash": "15401453649136667083"
+        },
+        {
+          "file": "src/index.html",
+          "hash": "7221581949132745997"
+        },
+        {
+          "file": "src/main.ts",
+          "hash": "15820264318967352480",
+          "deps": [
+            "npm:@angular/platform-browser"
+          ]
+        },
+        {
+          "file": "src/reset.scss",
+          "hash": "16939225212956937749"
+        },
+        {
+          "file": "src/shortcuts.sass",
+          "hash": "16693115629982654910"
+        },
+        {
+          "file": "src/styles.scss",
+          "hash": "10711547238981019742"
+        },
+        {
+          "file": "src/variables.scss",
+          "hash": "3499381534338417888"
+        },
+        {
+          "file": "tsconfig.app.json",
+          "hash": "17337579397915052279"
+        },
+        {
+          "file": "tsconfig.json",
+          "hash": "9008519475865335571"
+        },
+        {
+          "file": "tsconfig.spec.json",
+          "hash": "15575553540147145788"
+        }
+      ]
+    },
+    "nonProjectFiles": []
+  }
+}

@@ -1,0 +1,99 @@
+@import "variables";
+
+$component: "app-loader";
+
+$loader--width: 200px;
+$loader-dot--size: 20px;
+$animation-duration: 3s;
+
+#{$component} {
+    display: block;
+    width: fit-content;
+}
+
+.#{$component} {
+    height: $loader-dot--size;
+    width: $loader--width;
+    position: relative;
+
+    &__dot {
+        animation: {
+            name: loader;
+            timing-function: ease-in-out;
+            duration: $animation-duration;
+            iteration-count: infinite;
+        }
+        height: $loader-dot--size;
+        width: $loader-dot--size;
+        border-radius: 100%;
+        position: absolute;
+        left: 0;
+        border: 2px solid white;
+
+        &:first-child {
+            background-color: map-get($color, "bg-main");
+            animation-delay: .4s;
+        }
+        &:nth-child(2) {
+            background-color: map-get($color, "bg-main--light");
+            animation-delay: .3s;
+        }
+        &:nth-child(3) {
+            background-color: map-get($color, "bg-accent--light");
+            animation-delay: .2s;
+        }
+        &:nth-child(4) {
+            background-color: map-get($color, "bg-accent");
+            animation-delay: .1s;
+        }
+    }
+    &__text {
+        text-align: right;
+        position: relative;
+        top: 200%;
+        left: 0;
+        right: 0;
+        width: 4rem;
+        margin: auto;
+        display: block;
+
+        &:after {
+            content: "Loading";
+            font-weight: bold;
+            animation: {
+                name: loading-text;
+                duration: $animation-duration;
+                iteration-count: infinite;
+            };
+        }
+    }
+}
+@keyframes loader {
+    15% {
+        transform: translateX(0);
+    }
+    45% {
+        transform: translateX( $loader--width - $loader-dot--size );
+    }
+    65% {
+        transform: translateX( $loader--width - $loader-dot--size );
+    }
+    95% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes loading-text {
+    0% {
+        content: "Loading";
+    }
+    25% {
+        content: "Loading.";
+    }
+    50% {
+        content: "Loading..";
+    }
+    75% {
+        content: "Loading...";
+    }
+}

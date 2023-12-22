@@ -1,0 +1,88 @@
+@import "variables";
+
+app-calendar {
+    display: block;
+    max-width: 950px;
+    margin: auto;
+}
+
+.cal-cell {
+    user-select: none;
+}
+
+.cal-today {
+    font-size: 18px;
+
+    span:first-child {
+        font-size: 24px!important;
+    }
+}
+
+.cal-cell-top {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.cal-in-month:has(> .cal-cell--empty) {
+    background: rgb(128 128 128 / 5%);
+
+    span {
+        opacity: .2;
+    }
+}
+
+.cal-month-view .cal-day-cell.cal-out-month .cal-count {
+    opacity: .35;
+}
+
+.cal-cell--empty {
+    cursor: auto;
+}
+
+.cal-count {
+    font-family: "Nunito", sans-serif;
+    font-size: map-get($text-size, "xs");
+    color: #8F9EAF;
+    align-self: flex-start;
+    margin: 0 0 15px 15px;
+}
+
+@media (max-width: 768px) {
+    .cal-cell-top {
+        align-items: center;
+    }
+    .cal-day-number {
+        margin: 15px 0 5px!important;
+    }
+}
+
+@media (max-width: 425px) {
+    .cal-month-view .cal-day-cell {
+        min-height: 50px;
+    }
+
+    .cal-cell-row, .cal-cell-top {
+        height: 70px;
+    }
+
+    .cal-header {
+        height: 29px;
+    }
+
+    .cal-count {
+        margin: 0 0 15px 10px;
+    }
+}
+
+@media (max-width: 375px) {
+    .cal-today span:first-child {
+        font-size: 22px !important;
+    }
+
+    .cal-count {
+        margin: 0 0 15px 5px;
+    }
+}

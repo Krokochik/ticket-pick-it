@@ -1,0 +1,33 @@
+@import "variables";
+@import "app/components/clinics/clinics.component";
+
+$component: '.app-specialities';
+
+#{$component} {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 280px);
+    justify-content: space-evenly;
+    gap: 15px;
+    max-width: 900px;
+    margin: auto;
+
+    &__title {
+        margin-bottom: 20px;
+    }
+
+    &__speciality {
+        @include selectableItem;
+        display: flex;
+        text-align: left;
+        min-height: 40px;
+
+        span {
+            font-size: map-get($text-size, "m");
+            font-weight: 700;
+        }
+
+        span:first-letter {
+            color: map-get($color, "bg-accent");
+        }
+    }
+}

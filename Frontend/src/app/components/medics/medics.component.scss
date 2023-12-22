@@ -1,0 +1,69 @@
+@import "variables";
+@import "app/components/clinics/clinics.component";
+
+$component: ".app-medics";
+
+#{$component} {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 15px;
+    max-width: 900px;
+    margin: auto;
+
+    &__title {
+        margin-bottom: 5px;
+    }
+
+    &__speciality {
+        margin-bottom: 25px;
+    }
+
+    &__medic {
+        @include selectableItem;
+        max-width: 280px;
+        width: 100%;
+        display: flex;
+        min-height: 40px;
+
+        &:hover {
+            border: 3px solid map-get($color, "bg-accent");
+            padding: {
+                top: 10px;
+                right: 18px;
+                bottom: 18px;
+                left: 10px;
+            }
+        }
+    }
+
+    &__photo {
+        border-radius: 5px;
+        border: 3px solid map-get($color, "bg-main--light");
+        padding: 3px;
+        width: 70px;
+        height: 70px;
+
+    }
+
+    &__medic-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    &__name {
+        font-size: map-get($text-size, "m");
+        font-weight: 700;
+        margin-left: 10px;
+    }
+
+    &__office {
+        font-size: map-get($text-size, "xs");
+        font-weight: 400;
+        margin: 5px 0 0 13px;
+    }
+}
+

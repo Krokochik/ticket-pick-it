@@ -1,0 +1,40 @@
+@import "variables";
+
+$component: ".app-header";
+
+#{$component} {
+    margin-bottom: 20px;
+
+    &__container {
+        min-height: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-content: center;
+
+        padding: 1rem 1.5rem;
+    }
+
+    &__title {
+        position: relative;
+        justify-self: flex-start;
+        align-self: flex-start;
+        font: {
+            size: map-get($text-size, "xl");
+        }
+        letter-spacing: .05rem;
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+
+        &:last-child {
+            color: map-get($color, "sandy");
+        }
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

@@ -1,0 +1,39 @@
+@import "variables";
+@import "/app/components/clinics/clinics.component";
+
+$component: ".app-time-select";
+
+#{$component} {
+
+    &__title {
+        margin-bottom: 5px;
+    }
+
+    &__medic {
+        margin-bottom: 40px;
+    }
+
+    &__tickets {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        max-width: 700px;
+        margin: auto;
+    }
+
+    &__ticket {
+        @include selectableItem;
+        font-size: map-get($text-size, "m");
+        padding: 10px;
+        position: relative;
+        width: 115px;
+
+        &:hover {
+            top: -2px;
+            left: -2px;
+            padding: 10px;
+            border: 3px solid map-get($color, "bg-accent");
+        }
+    }
+}

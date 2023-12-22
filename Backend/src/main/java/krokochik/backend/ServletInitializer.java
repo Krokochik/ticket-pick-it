@@ -1,6 +1,5 @@
 package krokochik.backend;
 
-import krokochik.backend.controller.Controller;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 

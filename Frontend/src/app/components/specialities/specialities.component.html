@@ -1,0 +1,9 @@
+<h1 class="{{rootClass}}__title">Choose speciality</h1>
+<div class="{{rootClass}}" *ngIf="ready && specialities!.length > 0">
+    <div *ngFor="let speciality of specialities"
+         (click)="router.navigate(['order/clinic/' + this.id + '/speciality/' + speciality.code.toLowerCase() + '/medics'])"
+         class="{{rootClass}}__speciality">
+        <span class="{{rootClass}}__name">{{ speciality.name }}</span>
+    </div>
+</div>
+

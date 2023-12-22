@@ -1,0 +1,78 @@
+@import "variables";
+
+$component: ".app-clinics";
+$clinic-width: 280px;
+
+@mixin selectableItem {
+    padding: 14px;
+    border: 3px solid map-get($color, "bg-main");
+    cursor: pointer;
+    margin: 0 5px;
+
+    &:hover {
+        border-left: 5px solid map-get($color, "bg-accent");
+        padding-left: 8px;
+        padding-right: 18px;
+    }
+}
+
+#{$component} {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+
+    &__loader {
+        margin: auto;
+        width: fit-content;
+        display: block;
+    }
+
+    &__title {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    &__input {
+        margin: 0 100px 20px;
+        align-self: center;
+        border-radius: 0;
+        max-width: min(calc(100% - 75px), 400px);
+        width: 100%;
+
+        &:focus {
+            border: 2px solid map-get($color, "bg-accent")
+        }
+    }
+
+    &__clinics {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, $clinic-width);
+        justify-content: space-evenly;
+        gap: 10px;
+    }
+
+    &__clinic {
+        @include selectableItem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__name {
+        font-size: map-get($text-size, "s");
+        font-weight: bold;
+        margin-bottom: 3px;
+    }
+
+    &__address {
+        font-size: map-get($text-size, "xxs");
+        font-weight: 400;
+        color: darkgray;
+    }
+
+    &__placeholder {
+        margin-top: 20px;
+        text-align: center;
+        color: gray;
+        font-size: map-get($text-size, "m");
+    }
+}

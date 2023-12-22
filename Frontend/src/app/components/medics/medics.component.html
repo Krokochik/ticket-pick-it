@@ -1,0 +1,17 @@
+<h1 class="{{rootClass}}__title">Choose medic</h1>
+<ng-container *ngIf="ready">
+    <h3 class="text-sz-s {{rootClass}}__speciality">Chosen speciality: {{ speciality.name }}</h3>
+    <div class="{{rootClass}}">
+        <div *ngFor="let medic of medics; index as i"
+             (click)="router.navigate(['order/clinic/' + this.clinicId + '/speciality/' + speciality.code.toLowerCase() + '/medic/' + i])"
+             class="{{rootClass}}__medic">
+            <img [ngSrc]="medic.photo"
+                 width="70" height="70" alt="photo"
+                 class="{{rootClass}}__photo">
+            <div class="{{rootClass}}__medic-info">
+                <span class="{{rootClass}}__name">{{ (medic.firstName + " " + medic.lastName) | titlecase }}</span>
+                <span class="{{rootClass}}__office">Office: {{ medic.office }}</span>
+            </div>
+        </div>
+    </div>
+</ng-container>

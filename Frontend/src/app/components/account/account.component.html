@@ -1,0 +1,37 @@
+<div class="container">
+    <h1 class="title">Account</h1>
+    <div class="account" *ngIf="ready">
+        <div class="section">
+            <div class="subtitle">
+                <h2>Your tickets</h2>
+                <h4 *ngIf="tickets && tickets.length > 0">Click for more info</h4>
+            </div>
+            <div class="tickets">
+                <div *ngFor="let ticket of tickets"
+                     (click)="ticketClicked(ticket)"
+                     class="ticket"
+                >
+                    <h5 class="ticket__title">
+                        {{ ticket.date | date: "MMM dd, h:mm a" }}
+                    </h5>
+                    <span class="ticket__medic">
+                    to {{ ticket.medic.name }}, {{ ticket.speciality.name }}
+                </span>
+                    <span class="ticket__office">
+                    in office No. {{ ticket.medic.office }}
+                </span>
+                </div>
+                <span *ngIf="!tickets || tickets?.length == 0">
+                Nothing here yet. You can book a ticket
+                <a class="link" routerLink="/clinics">here</a>
+            </span>
+            </div>
+        </div>
+        <div class="section section-logout">
+            <h3>You can log out via button: </h3>
+            <button class="btn" (click)="logout()">
+                Logout
+            </button>
+        </div>
+    </div>
+</div>

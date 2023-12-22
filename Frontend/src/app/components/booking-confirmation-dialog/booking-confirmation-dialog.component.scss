@@ -1,0 +1,105 @@
+@import "variables";
+
+$component: ".app-booking-confirmation-dialog" !default;
+
+#{$component} {
+    padding: 15px;
+    min-height: 300px;
+
+    &__title {
+        margin-bottom: 5px;
+    }
+
+    &__subtitle {
+        margin-left: 2px;
+        margin-bottom: 12px;
+    }
+
+    &__warning {
+        margin: 15px 0;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-left: 2px;
+        min-height: 200px;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 10px;
+
+        & > span {
+            font-weight: 700;
+            font-size: map-get($text-size, "s");
+            margin-bottom: 7px;
+
+            &:first-letter {
+                color: map-get($color, "bg-accent");
+            }
+
+            & > span {
+                font-size: map-get($text-size, "s");
+                display: block;
+                font-weight: initial;
+                margin-left: 10px;
+                margin-top: 3px;
+            }
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        gap: 20px;
+    }
+
+    .btn {
+        font-size: map-get($text-size, "xs");
+        padding: 12px 20px;
+    }
+}
+
+.warning {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 10px;
+    background-color: fade-out(map-get($color, "bg-accent--light"), .9);
+    border: 3px solid fade-out(map-get($color, "bg-accent"), .5);
+
+
+    &__img {
+        margin-right: 10px;
+        width: 50px;
+        height: 50px;
+    }
+
+    &__paragraph {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    &__msg {
+        margin-left: 3px;
+    }
+
+    &__link {
+        color: map-get($color, "bg-accent");
+        margin-left: 3px;
+        text-decoration: underline;
+    }
+}
+
+.ngneat-dialog-backdrop {
+    background-color: rgba(6, 7, 19, .9) !important;
+}
+
+.ngneat-close-dialog {
+    color: fade-out(map-get($color, "bg-main"), .65) !important;
+    top: 10px !important;
+}
