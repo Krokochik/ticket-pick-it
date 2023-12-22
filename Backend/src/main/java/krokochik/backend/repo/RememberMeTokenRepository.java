@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Type;
+import java.sql.SQLOutput;
 import java.util.*;
 
 @Slf4j
@@ -32,12 +33,14 @@ public class RememberMeTokenRepository extends BaseRepositoryImpl<Set<Persistent
 
     @Override
     public void createNewToken(PersistentRememberMeToken token) {
+        if (data == null) data = new HashSet<>();
         data.add(token);
         saveDataToFile();
     }
 
     @Override
     public void updateToken(String series, String tokenValue, Date lastUsed) {
+        if (data == null) data = new HashSet<>();
         for (val token : data) {
             if (series.equals(token.getSeries())) {
                 data.remove(token);
@@ -46,6 +49,7 @@ public class RememberMeTokenRepository extends BaseRepositoryImpl<Set<Persistent
                         series, tokenValue,
                         lastUsed
                 ));
+                saveDataToFile();
                 break;
             }
         }
@@ -53,6 +57,7 @@ public class RememberMeTokenRepository extends BaseRepositoryImpl<Set<Persistent
 
     @Override
     public PersistentRememberMeToken getTokenForSeries(String seriesId) {
+        if (data == null) data = new HashSet<>();
         for (val token : data) {
             if (seriesId.equals(token.getSeries())) {
                 return token;
@@ -63,6 +68,7 @@ public class RememberMeTokenRepository extends BaseRepositoryImpl<Set<Persistent
 
     @Override
     public void removeUserTokens(String username) {
+        if (data == null) data = new HashSet<>();
         data.removeIf(token -> username.equals(token.getUsername()));
         saveDataToFile();
     }

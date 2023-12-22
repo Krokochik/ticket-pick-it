@@ -24,7 +24,6 @@ $component: ".app-medics";
         max-width: 280px;
         width: 100%;
         display: flex;
-        text-align: left;
         min-height: 40px;
 
         &:hover {
@@ -36,13 +35,6 @@ $component: ".app-medics";
                 left: 10px;
             }
         }
-
-        span {
-            font-size: map-get($text-size, "m");
-            font-weight: 700;
-            align-self: center;
-            margin-left: 10px;
-        }
     }
 
     &__photo {
@@ -52,6 +44,26 @@ $component: ".app-medics";
         width: 70px;
         height: 70px;
 
+    }
+
+    &__medic-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    &__name {
+        font-size: map-get($text-size, "m");
+        font-weight: 700;
+        margin-left: 10px;
+    }
+
+    &__office {
+        font-size: map-get($text-size, "xs");
+        font-weight: 400;
+        margin: 5px 0 0 13px;
     }
 }
 

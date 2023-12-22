@@ -6,31 +6,24 @@ import {Injectable} from '@angular/core';
 import {
     BehaviorSubject,
     catchError,
-    Observable, Subject,
+    Observable, retry, Subject,
 } from "rxjs";
 import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
-
-interface AuthInfo {
-    isAuth: boolean
-}
+import {da} from "date-fns/locale";
 
 @Injectable({
     providedIn: "root"
 })
 export class AuthService {
-    public auth = new Subject<boolean>();
+    public auth$ = new Subject<boolean>();
 
-    constructor(private http: HttpClient) {
-    }
-
-    async checkAuthentication() {
-        console.log("is1")
+    constructor(private http: HttpClient) { }
+    checkAuthentication() {
         this.http.get<any>("/server/auth/info")
+            .pipe(retry(1))
             .subscribe(data => {
-                console.log("is3")
-                this.auth.next(data.isAuth || false);
+                this.auth$.next(data?.isAuth || false);
             });
-        console.log("is2")
     }
 
     login(username: string, password: string, remember: unknown) {
@@ -40,11 +33,15 @@ export class AuthService {
                 .set("password", password)
                 .set("remember", !!remember))
             .pipe(catchError(err => {
-                    console.log("log");
-                    this.auth.next(err.url!.endsWith("/auth/success") || false);
+                    const auth = err.url!.endsWith("/auth/success") || false;
+                    this.auth$.next(auth);
                     return new Observable();
                 })
             ).subscribe();
+    }
+
+    logout() {
+        return this.http.get("/server/logout");
     }
 
     register(username: string, password: string) {

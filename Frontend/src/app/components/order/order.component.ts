@@ -25,7 +25,7 @@ export class OrderComponent extends ComponentDef implements OnInit {
     }
 
     ngOnInit() {
-        const id = Number.parseInt(this.route.snapshot.paramMap.get('id') || '');
+        const id = Number.parseInt(this.route.snapshot.paramMap.get("clinicId") || "");
         if (Number.isInteger(id)) {
             this.id = id;
             this.ready[0] = true;

@@ -15,7 +15,9 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.nio.file.OpenOption;
+import java.nio.file.StandardOpenOption;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
@@ -82,6 +84,13 @@ public abstract class BaseRepositoryImpl<T> implements BaseRepository {
         log.info("Start exporting data");
         File file = new File(storagePath
                 .replaceAll("\\\\+", "/") + "/" + getName() + ".dat");
+        try {
+            file.delete();
+            file.createNewFile();
+        } catch (IOException e) {
+            log.error("Something went wrong during writing data to " + file.getAbsolutePath(), e);
+            return CompletableFuture.completedFuture(false);
+        }
 
         log.info("Serializing data");
         String serialized = gson.toJson(data);
@@ -164,7 +173,10 @@ public abstract class BaseRepositoryImpl<T> implements BaseRepository {
             }
 
             log.info("Deserializing data");
-            data = gson.fromJson(content.toString(), getDataType());
+            val data = gson.fromJson(content.toString(), getDataType());
+            if (data != null) {
+                this.data = (T) data;
+            }
 
             log.info("Data is imported from " + file.getAbsolutePath());
             return CompletableFuture.completedFuture(true);

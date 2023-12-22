@@ -1,0 +1,45 @@
+<div class="{{rootClass}}">
+    <h3 class="{{rootClass}}__title">Ticket information</h3>
+
+    <div class="{{rootClass}}__content">
+        <div class="{{rootClass}}__info">
+            <span class="{{rootClass}}__clinic">Clinic:</span>
+            <div class="{{rootClass}}__clinic-info">
+                <span>
+                    <span class="text-wt-700">Name: </span>
+                    <span>{{ ref.data.clinic.name | titlecase }}</span>
+                </span>
+                <div>
+                    <span class="text-wt-700">Address: </span>
+                    <span>{{ ref.data.clinic.address }}</span>
+                </div>
+                <span>
+                <span class="text-wt-700">Phone: </span>
+                    {{ ref.data.clinic.phone }}
+                </span>
+            </div>
+            <span class="{{rootClass}}__date">Date:
+                <span>{{ ref.data.date | date: "h:mm a, MMMM dd, y" }}</span>
+            </span>
+            <span class="{{rootClass}}__medic">Medic:
+                <span>
+                    {{ ref.data.medic.name | titlecase }},
+                    {{ ref.data.speciality.name | lowercase }}
+                </span>
+            </span>
+            <span class="{{rootClass}}__office">Office:
+                <span>{{ ref.data.medic.office }}</span>
+            </span>
+        </div>
+
+        <div class="select-none {{rootClass}}__buttons">
+            <button class="btn btn--red" (click)="ref.close(true)">
+                Give Up
+            </button>
+            <button class="btn" (click)="ref.close(false)">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+

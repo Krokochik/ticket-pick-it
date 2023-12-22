@@ -1,0 +1,75 @@
+<div class="{{rootClass}}" *ngIf="ready">
+    <h1 class="{{rootClass}}__title">Choose visit day</h1>
+    <h5>to {{ ((medic.firstName + " " + medic.lastName) | titlecase) + ", " + (this.speciality.name | lowercase) }}</h5>
+
+    <div class="{{rootClass}}__toolbar">
+        <label (click)="month = today"
+               class="{{rootClass}}__return"
+               [style.opacity]="
+                month.getMonth() == today.getMonth() &&
+                month.getFullYear() == today.getFullYear()
+                    ? 0 : 1"
+        >
+        </label>
+        <div class="{{rootClass}}__month-controls">
+            <label class="select-none {{rootClass}}__previous"
+                   (click)="month = addMonths(month, -1)">
+                <img ngSrc="/assets/images/left-arrow.svg"
+                     width="30" height="30" alt="previous">
+            </label>
+            <h4 class="{{rootClass}}__month">
+                {{ month | date: "MMMM, y" }}
+            </h4>
+            <label class="select-none {{rootClass}}__next"
+                   (click)="month = addMonths(month, 1)">
+                <img ngSrc="/assets/images/right-arrow.svg"
+                     width="30" height="30" alt="next">
+            </label>
+        </div>
+    </div>
+
+    <ng-container>
+        <mwl-calendar-month-view
+            [viewDate]="month"
+            [events]="events"
+            (dayClicked)="dayClicked($event)"
+            (beforeViewRender)="beforeViewRender($event)"
+            [cellTemplate]="cell"
+            [headerTemplate]="header"
+        ></mwl-calendar-month-view>
+
+        <ng-template #cell let-day="day" let-locale="locale">
+            <div class="cal-cell-top"
+                 [class.cal-cell--empty]="day.badgeTotal == 0"
+            >
+                <span class="cal-day-number">
+                    {{ day.date | calendarDate:'monthViewDayNumber':locale }}
+                </span>
+                <span class="cal-count" *ngIf="day.badgeTotal > 0">
+                    {{ day.badgeTotal }}
+                </span>
+            </div>
+        </ng-template>
+
+        <ng-template
+            #header
+            let-days="days"
+            let-trackByWeekDayHeaderDate="trackByWeekDayHeaderDate">
+            <div class="cal-cell-row cal-header" role="row">
+                <div
+                    class="cal-cell"
+                    *ngFor="let day of days; trackBy: trackByWeekDayHeaderDate"
+                    [class.cal-past]="day.isPast"
+                    [class.cal-today]="day.isToday"
+                    [class.cal-future]="day.isFuture"
+                    [class.cal-weekend]="day.isWeekend"
+                    [ngClass]="day.cssClass"
+                    tabindex="0"
+                    role="columnheader"
+                >
+                    {{ day.viewDate }}
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

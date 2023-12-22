@@ -2403,6 +2403,42 @@
         "hash": "sha512-ccfcIDlogiXNq5KcbAwbaO7lMh3Tm1i3khMPYpxlK8hH/W53zN81KM9coerRLOnTGu3nfXIniAmQbRI9OxbC0w=="
       }
     },
+    "npm:@mattlewis92/dom-autoscroller": {
+      "type": "npm",
+      "name": "npm:@mattlewis92/dom-autoscroller",
+      "data": {
+        "version": "2.4.2",
+        "packageName": "@mattlewis92/dom-autoscroller",
+        "hash": "sha512-YbrUWREPGEjE/FU6foXcAT1YbVwqD/jkYnY1dFb0o4AxtP3s4xKBthlELjndZih8uwsDWgQZx1eNskRNe2BgZQ=="
+      }
+    },
+    "npm:@ngneat/dialog": {
+      "type": "npm",
+      "name": "npm:@ngneat/dialog",
+      "data": {
+        "version": "5.0.0",
+        "packageName": "@ngneat/dialog",
+        "hash": "sha512-+qLGaLcNXQ5PVtlv4htqHsJ4JV9TZ+wy89rtYMsno/jZuB63usMITPEB7TgtEPgpbyDDcYVagA6eQqYMEgZPOA=="
+      }
+    },
+    "npm:tslib@2.3.1": {
+      "type": "npm",
+      "name": "npm:tslib@2.3.1",
+      "data": {
+        "version": "2.3.1",
+        "packageName": "tslib",
+        "hash": "sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw=="
+      }
+    },
+    "npm:tslib": {
+      "type": "npm",
+      "name": "npm:tslib",
+      "data": {
+        "version": "2.6.2",
+        "packageName": "tslib",
+        "hash": "sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q=="
+      }
+    },
     "npm:@ngtools/webpack": {
       "type": "npm",
       "name": "npm:@ngtools/webpack",
@@ -3411,6 +3447,15 @@
         "hash": "sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg=="
       }
     },
+    "npm:@scarf/scarf": {
+      "type": "npm",
+      "name": "npm:@scarf/scarf",
+      "data": {
+        "version": "1.3.0",
+        "packageName": "@scarf/scarf",
+        "hash": "sha512-lHKK8M5CTcpFj2hZDB3wIjb0KAbEOgDmiJGDv1WBRfQgRm/a8/XMEkG/N1iM01xgbUDsPQwi42D+dFo1XPAKew=="
+      }
+    },
     "npm:@schematics/angular": {
       "type": "npm",
       "name": "npm:@schematics/angular",
@@ -4338,6 +4383,33 @@
         "hash": "sha512-5p6WTN0DdTGVQk6VjcEju19IgaHudalcfabD7yhDGeA6bcQnmL+CpveLJq/3hvfwd1aof6L386Ougkx6RfyMIQ=="
       }
     },
+    "npm:angular-calendar": {
+      "type": "npm",
+      "name": "npm:angular-calendar",
+      "data": {
+        "version": "0.31.0",
+        "packageName": "angular-calendar",
+        "hash": "sha512-QGPObUmOYLr4IeSaj1pzZjcycN6otYx+SbeezJuujstXR9f2wo4CtMlBQ+SU+ZF5VFfrdYge8qkxMGCLBLBRrw=="
+      }
+    },
+    "npm:angular-draggable-droppable": {
+      "type": "npm",
+      "name": "npm:angular-draggable-droppable",
+      "data": {
+        "version": "8.0.0",
+        "packageName": "angular-draggable-droppable",
+        "hash": "sha512-+gpSNBbygjV1pxTxsM3UPJKcXHXJabYoTtKcgQe74rGnb1umKc07XCBD1qDzvlG/kocthvhQ12qfYOYzHnE3ZA=="
+      }
+    },
+    "npm:angular-resizable-element": {
+      "type": "npm",
+      "name": "npm:angular-resizable-element",
+      "data": {
+        "version": "7.0.2",
+        "packageName": "angular-resizable-element",
+        "hash": "sha512-/BGuNiA38n9klexHO1xgnsA3VYigj9v+jUGjKtBRgfB26bCxZKsNWParSu2k3EqbATrfAJC4Nl8f7cORpJFf4w=="
+      }
+    },
     "npm:ansi-colors": {
       "type": "npm",
       "name": "npm:ansi-colors",
@@ -4950,6 +5022,15 @@
         "hash": "sha512-hkLPepehmnKk41pUGm3sYxoFs/umurYfYJCerbXEyFIWcAzvpipAgVkBqqT9RBKMGjnq6kMuyYwha6csxbiM1A=="
       }
     },
+    "npm:calendar-utils": {
+      "type": "npm",
+      "name": "npm:calendar-utils",
+      "data": {
+        "version": "0.10.4",
+        "packageName": "calendar-utils",
+        "hash": "sha512-gBK4xCJ42yjaUKwuUha6cZOfxAmGzvSgbdAaX3xLRioeKbYoOK1x1qeD6dch72rsMZlTgATPbBBx42bnkStqgQ=="
+      }
+    },
     "npm:call-bind": {
       "type": "npm",
       "name": "npm:call-bind",
@@ -5551,6 +5632,15 @@
         "version": "1.0.1",
         "packageName": "custom-event",
         "hash": "sha512-GAj5FOq0Hd+RsCGVJxZuKaIDXDf3h6GQoNEjFgbLLI/trgtavwUbSnZ5pVfg27DVCaWjIohryS0JFwIJyT2cMg=="
+      }
+    },
+    "npm:date-fns": {
+      "type": "npm",
+      "name": "npm:date-fns",
+      "data": {
+        "version": "3.0.0",
+        "packageName": "date-fns",
+        "hash": "sha512-xjDz3rNN9jp+Lh3P/4MeY4E5HkaRnEnrJCcrdRZnKdn42gJlIe6hwrrwVXePRwVR2kh1UcMnz00erYBnHF8PFA=="
       }
     },
     "npm:date-format": {
@@ -9216,6 +9306,15 @@
         "hash": "sha512-IFroCz/59Lqa2uBvzK3bKDbDDIEaAY8XJ1jFxcLWTqosrsc32//P4VuSB2vZXoHiHqOmx8B5L5hnKOxL/7FlPw=="
       }
     },
+    "npm:positioning": {
+      "type": "npm",
+      "name": "npm:positioning",
+      "data": {
+        "version": "2.0.1",
+        "packageName": "positioning",
+        "hash": "sha512-DsAgM42kV/ObuwlRpAzDTjH9E8fGKkMDJHWFX+kfNXSxh7UCCQxEmdjv/Ws5Ft1XDnt3JT8fIDYeKNSE2TbttA=="
+      }
+    },
     "npm:postcss": {
       "type": "npm",
       "name": "npm:postcss",
@@ -10591,15 +10690,6 @@
         "version": "4.0.0",
         "packageName": "tsconfig-paths-webpack-plugin",
         "hash": "sha512-fw/7265mIWukrSHd0i+wSwx64kYUSAKPfxRDksjKIYTxSAp9W9/xcZVBF4Kl0eqQd5eBpAQ/oQrc5RyM/0c1GQ=="
-      }
-    },
-    "npm:tslib": {
-      "type": "npm",
-      "name": "npm:tslib",
-      "data": {
-        "version": "2.6.2",
-        "packageName": "tslib",
-        "hash": "sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q=="
       }
     },
     "npm:tuf-js": {
@@ -14699,6 +14789,16 @@
       "type": "static"
     },
     {
+      "source": "npm:@ngneat/dialog",
+      "target": "npm:@angular/core",
+      "type": "static"
+    },
+    {
+      "source": "npm:@ngneat/dialog",
+      "target": "npm:tslib@2.3.1",
+      "type": "static"
+    },
+    {
       "source": "npm:@ngtools/webpack",
       "target": "npm:@angular/compiler-cli",
       "type": "static"
@@ -16961,6 +17061,66 @@
     {
       "source": "npm:ajv-keywords",
       "target": "npm:fast-deep-equal",
+      "type": "static"
+    },
+    {
+      "source": "npm:angular-calendar",
+      "target": "npm:@angular/core",
+      "type": "static"
+    },
+    {
+      "source": "npm:angular-calendar",
+      "target": "npm:@scarf/scarf",
+      "type": "static"
+    },
+    {
+      "source": "npm:angular-calendar",
+      "target": "npm:angular-draggable-droppable",
+      "type": "static"
+    },
+    {
+      "source": "npm:angular-calendar",
+      "target": "npm:angular-resizable-element",
+      "type": "static"
+    },
+    {
+      "source": "npm:angular-calendar",
+      "target": "npm:calendar-utils",
+      "type": "static"
+    },
+    {
+      "source": "npm:angular-calendar",
+      "target": "npm:positioning",
+      "type": "static"
+    },
+    {
+      "source": "npm:angular-calendar",
+      "target": "npm:tslib",
+      "type": "static"
+    },
+    {
+      "source": "npm:angular-draggable-droppable",
+      "target": "npm:@angular/core",
+      "type": "static"
+    },
+    {
+      "source": "npm:angular-draggable-droppable",
+      "target": "npm:@mattlewis92/dom-autoscroller",
+      "type": "static"
+    },
+    {
+      "source": "npm:angular-draggable-droppable",
+      "target": "npm:tslib",
+      "type": "static"
+    },
+    {
+      "source": "npm:angular-resizable-element",
+      "target": "npm:@angular/core",
+      "type": "static"
+    },
+    {
+      "source": "npm:angular-resizable-element",
+      "target": "npm:tslib",
       "type": "static"
     },
     {

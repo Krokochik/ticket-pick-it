@@ -1,0 +1,15 @@
+<div class="{{rootClass}}" *ngIf="ready">
+    <h1 class="{{rootClass}}__title">Choose visit time</h1>
+    <h5 class="{{rootClass}}__medic">
+        to {{ ((medic.firstName + " " + medic.lastName) | titlecase) + ", " + (this.speciality.name | lowercase) }}
+    </h5>
+
+    <div class="{{rootClass}}__tickets">
+        <span *ngFor="let ticket of availableTickets"
+              class="{{rootClass}}__ticket"
+              (click)="bookTicket(ticket)"
+        >
+            {{ ticket | date: "h:mm a" }}
+        </span>
+    </div>
+</div>

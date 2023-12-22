@@ -1,12 +1,13 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ComponentDef} from "../component";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../services/AuthService";
-import {catchError, Observable} from "rxjs";
+import {catchError, Observable, Subscription} from "rxjs";
 import {LOG_ERROR} from "karma/lib/constants";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
+import {DataService} from "../../services/DataService";
 
 @Component({
     selector: 'app-sign-in',
@@ -15,8 +16,9 @@ import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
     templateUrl: './auth.component.html',
     styleUrl: './auth.component.scss'
 })
-export class AuthComponent extends ComponentDef implements OnInit {
+export class AuthComponent extends ComponentDef implements OnInit, OnDestroy {
     ready = false;
+    sub: Subscription;
 
     private LOG_ERR_MSG = "Wrong username or password";
     private subscribed = false;
@@ -41,27 +43,46 @@ export class AuthComponent extends ComponentDef implements OnInit {
 
     constructor(elementRef: ElementRef,
                 private authService: AuthService,
-                private router: Router) {
+                private router: Router,
+                private route: ActivatedRoute,
+                private dataService: DataService) {
         super(elementRef);
     }
 
+    navigateNext() {
+        const origin = this.route.snapshot.queryParamMap.get("origin");
+        if (origin) {
+            const originData = this.dataService.messages[origin];
+            if (originData) this.router.navigate([originData]);
+            else this.router.navigate(["/"]);
+        } else {
+            this.router.navigate(["/"]);
+        }
+    }
+
     ngOnInit() {
-        this.authService.auth.subscribe(auth => {
+        this.sub = this.authService.auth$.subscribe(auth => {
+            console.log("auth sub")
             if (auth) {
-                this.router.navigate(["/"]);
+                this.navigateNext();
             }
             this.ready = true;
         });
         this.authService.checkAuthentication();
     }
 
+    ngOnDestroy() {
+        this.sub!.unsubscribe();
+    }
+
     private subscribe() {
         if (!this.subscribed) {
             this.subscribed = true;
-            this.authService.auth.subscribe(authenticated => {
+            this.sub!.unsubscribe();
+            this.sub = this.authService.auth$.subscribe(authenticated => {
                 if (authenticated) {
                     this.error = "";
-                    this.router.navigate(["/"]);
+                    this.navigateNext();
                 } else {
                     this.error = this.LOG_ERR_MSG;
                 }

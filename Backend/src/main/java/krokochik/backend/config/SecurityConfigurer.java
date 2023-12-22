@@ -5,14 +5,19 @@ import krokochik.backend.repo.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.authorization.AuthorityAuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,9 +32,12 @@ import org.springframework.security.web.authentication.rememberme.PersistentReme
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
+import java.sql.Time;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Configuration
@@ -61,13 +69,21 @@ public class SecurityConfigurer {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
-            User user = userRepository.findByUsername(username);
+            User user = userRepository.convertToUser(userRepository
+                    .findByUsername(username));
             if (user != null) {
                 return user;
             } else {
                 throw new UsernameNotFoundException("User not found");
             }
         };
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring().requestMatchers(
+                "/clinics/**", "/clinic/**", "/medic/**",
+                "/speciality/**", "/ping");
     }
 
     @Bean
@@ -121,9 +137,9 @@ public class SecurityConfigurer {
 
         http.rememberMe(conf -> conf
                 .rememberMeParameter("remember")
-                .useSecureCookie(true)
                 .userDetailsService(userDetailsService())
-                .tokenRepository(tokenRepository));
+                .tokenRepository(tokenRepository)
+                .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(5)));
         return http.build();
     }
 }

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnInit} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {ComponentDef} from "../component";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
@@ -9,11 +9,14 @@ import {FormsModule} from "@angular/forms";
 import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {LoaderComponent} from "../loader/loader.component";
 import {Speciality} from "../specialities/specialities.component";
+import {ChangeDetection} from "@angular/cli/lib/config/workspace-schema";
+import {NetService} from "../../services/NetService";
 
 export interface Medic {
     firstName: string,
     lastName: string,
-    photo: string
+    photo: string,
+    office: number
 }
 
 @Component({
@@ -28,39 +31,37 @@ export class MedicsComponents extends ComponentDef implements OnInit {
     ready: boolean;
     medics: Medic[];
     speciality: Speciality;
-    imagesLoad = new BehaviorSubject<number>(0);
-    specialityLoaded = false;
 
     constructor(elementRef: ElementRef,
                 orderComponent: OrderComponent,
                 route: ActivatedRoute,
                 protected router: Router,
-                protected http: HttpClient) {
+                protected netService: NetService) {
         super(elementRef);
         this.clinicId = orderComponent.id;
-        const specialityCode = route.snapshot.paramMap.get("code") || "";
+        const specialityCode = route.snapshot.paramMap.get("specialityCode") || "";
         this.speciality = {
-            code: specialityCode, name: specialityCode
+            code: specialityCode, name: ""
         };
     }
 
+    checkReadyAndSet() {
+        this.ready =  this.medics?.length > 0 &&
+            this.speciality.name != "";
+    }
+
     ngOnInit() {
-        this.http.get<Medic[]>(`/server/clinic/${this.clinicId}/speciality/${this.speciality.code}/medics`)
+        this.netService.getMedics(this.clinicId, this.speciality)
             .subscribe(medics => {
                 this.medics = medics;
+                let photos: string[] = [];
+                medics.forEach(medic => photos.push(medic.photo));
+                this.checkReadyAndSet();
             });
-        this.http.get(`/server/speciality/${this.speciality.code}/name`,
-            {responseType: "text"})
+        this.netService.getSpecialityName(this.speciality.code)
             .subscribe(name => {
                 this.speciality.name = name;
-                this.specialityLoaded = true;
+                this.checkReadyAndSet();
             });
-        this.imagesLoad.subscribe(v => {
-            console.log(v)
-            if (this.medics && this.specialityLoaded && (v == this.medics?.length)) {
-                console.log(this.ready, v)
-                this.ready = true;
-            }
-        })
     }
 }

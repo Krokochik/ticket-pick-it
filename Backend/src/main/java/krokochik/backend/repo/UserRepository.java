@@ -2,6 +2,7 @@ package krokochik.backend.repo;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import jakarta.annotation.Nullable;
 import krokochik.backend.model.SerializableUser;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -16,6 +17,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Repository
@@ -35,19 +37,27 @@ public class UserRepository extends BaseRepositoryImpl<Set<SerializableUser>> {
         return new TypeToken<Set<SerializableUser>>() {}.getType();
     }
 
+    public void save(SerializableUser user) {
+        data = data.stream()
+                .filter(u -> !u.getUsername().equals(user.getUsername()))
+                .collect(Collectors.toSet());
+        data.add(user);
+        saveDataToFile();
+    }
+
     public void save(User user) {
-        data.add(new SerializableUser(
+        save(new SerializableUser(
                 user.getUsername(), user.getPassword()));
         saveDataToFile();
     }
 
-    public User findByUsername(String username) {
+    @Nullable
+    public SerializableUser findByUsername(String username) {
         loadDataFromFile();
-        val sUser = data.stream()
+        return data.stream()
                 .filter(user -> user.getUsername().equals(username))
                 .findFirst()
                 .orElse(null);
-        return toUsers(sUser)[0];
     }
 
     public SerializableUser[] getAllUsers() {
@@ -69,6 +79,14 @@ public class UserRepository extends BaseRepositoryImpl<Set<SerializableUser>> {
                             new SimpleGrantedAuthority("USER")));
         }
         return users;
+    }
+
+    public User convertToUser(SerializableUser sUser) {
+        return toUsers(sUser)[0];
+    }
+
+    public User[] convertToUser(SerializableUser... sUser) {
+        return toUsers(sUser);
     }
 
     @Override

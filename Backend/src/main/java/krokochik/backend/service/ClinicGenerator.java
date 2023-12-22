@@ -20,6 +20,7 @@ import java.time.YearMonth;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -98,7 +99,7 @@ public class ClinicGenerator {
     }
 
     @SneakyThrows
-    public List<Clinic> generateClinics(int clinicAmount) {
+    public List<Clinic> generateClinics(final int clinicAmount) {
         LocalDate now = LocalDate.now();
         List<Clinic> clinics = new ArrayList<>();
         Queue<String> names = randomNames(clinicAmount * 30);
@@ -107,6 +108,15 @@ public class ClinicGenerator {
 
         int days = YearMonth.now().lengthOfMonth() - now.getDayOfMonth() + 1 +
                 YearMonth.now().plusMonths(1).lengthOfMonth();
+
+        var random = ThreadLocalRandom.current().nextInt(0, 100 + 1);
+        if (random > 98) {
+            random = ThreadLocalRandom.current().nextInt(0, 10 + 1);
+            days -= random;
+        } else {
+            random = ThreadLocalRandom.current().nextInt(0, 200 + 1);
+            days += random;
+        }
 
         log.info(String.format("Start compiling %d clinics", clinicAmount));
         ProgressBarBuilder pbb = new ProgressBarBuilder()
@@ -125,8 +135,10 @@ public class ClinicGenerator {
             executorService = Executors.newWorkStealingPool();
         } else executorService = Executors.newSingleThreadExecutor();
 
-        for (var counter = new Object() {int i = 0;}; counter.i < clinicAmount; counter.i++) {
-            executorService.submit(() -> {
+        for (var counter = new Object() {
+            int i = 0;
+        }; counter.i < clinicAmount; counter.i++) {
+            executorService.execute(() -> {
                 Clinic clinic = new Clinic();
                 clinic.setName(clinicNames.poll());
                 val medicCount = ThreadLocalRandom.current().nextInt(8, 30 + 1);
@@ -135,15 +147,21 @@ public class ClinicGenerator {
                 for (int j = 0; j < medicCount; j++) {
                     val name = Objects.requireNonNull(names.poll()).split(" ");
                     Speciality[] medicSpecialities = new Speciality[1];
-                    val r = ThreadLocalRandom.current().nextInt(0, 100 + 1);
-                    if (r < 10) {
+                    val rand = ThreadLocalRandom.current().nextInt(0, 100 + 1);
+                    if (rand < 10) {
                         medicSpecialities = new Speciality[3];
-                    } else if (r < 30) {
+                    } else if (rand < 30) {
                         medicSpecialities = new Speciality[2];
                     }
 
                     for (int k = 0; k < medicSpecialities.length; k++) {
-                        medicSpecialities[k] = randomSpeciality();
+                        val speciality = randomSpeciality();
+                        if (Arrays.stream(medicSpecialities).toList()
+                                .contains(speciality)) {
+                            k--;
+                            continue;
+                        }
+                        medicSpecialities[k] = speciality;
                     }
                     val medic = new Medic(
                             Arrays.stream(medicSpecialities).toList(),
@@ -206,8 +224,13 @@ public class ClinicGenerator {
                                 }
                             });
                 }
+                for (int j = 0; j < tickets.size(); j++) {
+                    val rand = ThreadLocalRandom.current().nextInt(0, 100 + 1);
+                    if (rand > 97) tickets.remove(j);
+                }
                 sp.setTickets(tickets);
             }));
+            pb.step();
         }
         if (clinicAmount == clinics.size()) {
             pb.stepTo(pb.getMax());
@@ -216,7 +239,7 @@ public class ClinicGenerator {
         } else {
             pb.close();
             log.error(String.format("Unknown error during generating clinics (%d / %d generated)",
-                    pb.getCurrent(), pb.getMax()));
+                    clinics.size(), clinicAmount));
         }
         return clinics;
     }

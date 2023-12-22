@@ -93,13 +93,22 @@
 
 
 .btn {
-    &_accent {
+    &--accent {
         box-shadow: inset 2px 2px 2px 0 rgba(224, 118, 38, 0.5),
         7px 7px 20px 0 rgba(0, 0, 0, .1),
         4px 4px 5px 0 rgba(0, 0, 0, .1);
 
         background: linear-gradient(10deg, map-get($color, "bg-accent--light") 10%,
             map-get($color, "bg-accent") 100%);
+    }
+
+    &--red {
+        box-shadow: inset 2px 2px 2px 0 rgba(255, 178, 178, .5),
+        7px 7px 20px 0 rgba(0, 0, 0, .1),
+        4px 4px 5px 0 rgba(0, 0, 0, .1);
+
+        background: linear-gradient(20deg, map-get($color, "red") 20%,
+            red 100%);
     }
 
     border-radius: 18px;
@@ -109,7 +118,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
-    box-shadow: inset 2px 2px 2px 0 rgba(39, 84, 164, 0.5),
+    box-shadow: inset 2px 2px 2px 0 rgba(209, 225, 254, .5),
     7px 7px 20px 0 rgba(0, 0, 0, .1),
     4px 4px 5px 0 rgba(0, 0, 0, .1);
     outline: none;

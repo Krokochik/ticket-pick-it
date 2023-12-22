@@ -45,34 +45,7 @@ public class RunConfigurer {
             if (args.getOptionValues("storage") != null)
                 temp = Paths.get(args.getOptionValues("storage").get(0));
 
-            Path path = temp;
-            CompletableFuture.runAsync(() -> {
-                try (WatchService watchService =
-                             FileSystems.getDefault().newWatchService()) {
-
-                    path.register(watchService,
-                            StandardWatchEventKinds.ENTRY_MODIFY,
-                            StandardWatchEventKinds.ENTRY_CREATE);
-                    boolean poll = true;
-                    log.info("File system listening started at path " + path);
-                    log.info("App is initialized and ready");
-                    while (poll) {
-                        WatchKey key = watchService.take();
-                        for (WatchEvent<?> event : key.pollEvents()) {
-                            if ((clinicRepository.getName() + ".dat")
-                                    .equals(event.context().toString())) {
-                                clinicRepository.loadDataFromFile();
-                            } else if ((userRepository.getName() + ".dat")
-                                    .equals(event.context().toString())) {
-                                userRepository.loadDataFromFile();
-                            }
-                        }
-                        poll = key.reset();
-                    }
-                } catch (Exception e) {
-                    log.error(e.toString());
-                }
-            });
+            log.info("App is initialized and ready");
         };
     }
 }

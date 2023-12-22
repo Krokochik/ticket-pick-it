@@ -86,6 +86,7 @@ public class GsonConfigurer {
                 .registerTypeAdapter(Time.class, timeDeserializer())
                 .registerTypeAdapter(PersistentRememberMeToken.class, rememberMeTokenSerializer())
                 .registerTypeAdapter(PersistentRememberMeToken.class, rememberMeTokenDeserializer())
+                .setLenient()
                 .create();
     }
 }

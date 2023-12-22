@@ -1,0 +1,41 @@
+<div class="{{rootClass}}">
+    <h3 class="{{rootClass}}__title">Confirm the booking</h3>
+    <h6 class="{{rootClass}}__subtitle">Check if all the data is correct</h6>
+
+    <div class="warning {{rootClass}}__warning" *ngIf="warning">
+        <img class="select-none warning__img" ngSrc="/assets/images/warning.svg"
+             width="50" height="50" alt="">
+        <div class="warning__paragraph">
+            <h4 class="warning__title">Warning!</h4>
+            <ng-container [ngSwitch]="warningType">
+                <p *ngSwitchCase="'speciality'" class="warning__msg">
+                    You already have a ticket for a doctor in this speciality: {{ warningData }}
+                </p>
+                <p *ngSwitchCase="'date'" class="warning__msg">
+                    You have a ticket for about the same time: {{ warningData }}
+                </p>
+            </ng-container>
+            <a (click)="ref.close()" routerLink="/account"
+               class="warning__link">See more</a>
+        </div>
+    </div>
+
+    <div class="{{rootClass}}__content">
+        <div class="{{rootClass}}__info">
+            <span class="{{rootClass}}__clinic">Clinic:
+                <span>{{ ref.data.clinic }}</span>
+            </span>
+            <span class="{{rootClass}}__medic">Medic:
+                <span>{{ ref.data.medic }}</span>
+            </span>
+            <span class="{{rootClass}}__date">Date:
+                <span>{{ ref.data.date | date: "h:mm a, MMMM dd, y" }}</span>
+            </span>
+        </div>
+
+        <div class="select-none {{rootClass}}__buttons">
+            <button class="btn btn--accent" (click)="ref.close(true)">Confirm</button>
+            <button class="btn" (click)="ref.close(false)">Cancel</button>
+        </div>
+    </div>
+</div>

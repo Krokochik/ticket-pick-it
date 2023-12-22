@@ -23,10 +23,8 @@ export class HeaderComponent extends ComponentDef implements OnInit {
     }
 
     async ngOnInit() {
-        console.log("init")
-        this.authService.auth.subscribe(authenticated => {
+        this.authService.auth$.subscribe(authenticated => {
             this.authenticated = authenticated;
-            console.log("auth", authenticated)
             this.ready = true;
         })
     }

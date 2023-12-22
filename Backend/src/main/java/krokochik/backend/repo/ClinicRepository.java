@@ -37,8 +37,7 @@ public class ClinicRepository extends BaseRepositoryImpl<List<Clinic>> {
 
     @Override
     protected Type getDataType() {
-        return new TypeToken<List<Clinic>>() {
-        }.getType();
+        return new TypeToken<List<Clinic>>() { }.getType();
     }
 
     @Override

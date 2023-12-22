@@ -7,19 +7,27 @@ import {AccountComponent} from "./components/account/account.component";
 import {ClinicsComponent} from "./components/clinics/clinics.component";
 import {SpecialitiesComponent} from "./components/specialities/specialities.component";
 import {MedicsComponents} from "./components/medics/medics.component";
+import {CalendarComponent} from "./components/calendar/calendar.component";
+import {TimeSelectComponent} from "./components/time-select/time-select.component";
 
 export const routes: Routes = [
     {
         path: "login", component: AuthComponent
     },
     {
-        path: "order/clinic/:id", component: OrderComponent,
+        path: "order/clinic/:clinicId", component: OrderComponent,
         children: [
             {
                 path: "specialities", component: SpecialitiesComponent
             },
             {
-              path: "speciality/:code/medics", component: MedicsComponents
+                path: "speciality/:specialityCode/medics", component: MedicsComponents
+            },
+            {
+                path: "speciality/:specialityCode/medic/:medicId", component: CalendarComponent
+            },
+            {
+                path: "speciality/:specialityCode/medic/:medicId/:date", component: TimeSelectComponent
             },
             {
                 path: "", redirectTo: "clinics", pathMatch: "full"
