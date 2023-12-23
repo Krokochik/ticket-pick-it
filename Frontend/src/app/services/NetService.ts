@@ -70,7 +70,7 @@ export class NetService {
         }>>("/server/my-tickets", {}).pipe(retry(1))
             .subscribe(tickets => {
                 const ticketArr: Ticket[] = [];
-                if (tickets.length == 0)
+                if (!tickets || tickets.length == 0)
                     buff.next([]);
                 let ticketsLoaded = 0;
                 for (const ticket of tickets) {
