@@ -51,7 +51,7 @@ Run jarfile with java. The app applies the next options:
 
 | Option           | Type      | Applies                                       | Function                                                                               | Example                           |
 |------------------|:---------:|:---------------------------------------------:|----------------------------------------------------------------------------------------|-----------------------------------|
-| -Dserver.port    | parameter | Numeric port (default 8080)                   | Changes app's port (default 8080); *Specify immediately after "-jar"                   | -Dserver.port=1234                |
+| -Dserver.port    | parameter | Numeric port (default 8080)                   | Changes app's port; *Specify immediately after "-jar"                   | -Dserver.port=1234                |
 | --renew          | parameter | One (or more) of: clinics, users, remember-me | Parametrized -renew                                                                    | --renew=clinics&users             |
 | --storage        | parameter | String path (default %temp%)                  | Specifies data storage path                                                            | --storage="C:\Users"              |
 | --clinics-amount | parameter | Number                                        | Specifies clinic generation amount                                                     | --clinics-amount=150              |
