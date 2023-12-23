@@ -21,6 +21,7 @@ or
 ```
 curl -LJO https://github.com/Krokochik/ticket-pick-it/releases/download/v1.0.0/Backend.jar
 ```
+*First launch may probably fail. Please, restart the app after init if errors occur.
 ### Frontend
 #### Windows
 Install exe:
