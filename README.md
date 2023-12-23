@@ -67,7 +67,7 @@ java -jar -Dserver.port=8080 \path\to\Backend.jar --storage="C:\Users\User\Deskt
 
 ### Frontend
 
-If backend necessary, specify server port at \path\to\proxy.conf.json
+If necessary, specify backend server port at \path\to\proxy.conf.json
 
 #### Windows
 Run installed exe, e.g. `./frontend.exe`, next await for unpacking and opening server in terminal.
