@@ -20,27 +20,30 @@ import java.time.YearMonth;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class ClinicGenerator {
 
     @Autowired
+    Callable<ExecutorService> newExecutorService;
+
+    @Autowired
     ApplicationArguments args;
 
-    private Queue<String> randomNames(int amount) {
-        Queue<String> names = new LinkedList<>();
-        Faker faker = new Faker();
+    @Autowired
+    Faker faker;
+
+    private BlockingQueue<String> randomNames(int amount) {
+        BlockingQueue<String> names = new ArrayBlockingQueue<>(amount);
         for (int i = 0; i < amount; i++) {
             names.add(faker.name().fullName());
         }
         return names;
     }
 
-    private Queue<String> randomAddresses(int amount) {
-        Queue<String> addresses = new LinkedList<>();
-        Faker faker = new Faker();
+    private BlockingQueue<String> randomAddresses(int amount) {
+        BlockingQueue<String> addresses = new ArrayBlockingQueue<>(amount);
         for (int i = 0; i < amount; i++) {
             addresses.add(faker.address()
                     .fullAddress().replaceAll(" ", "{SPACE}"));
@@ -87,9 +90,8 @@ public class ClinicGenerator {
         return schedule;
     }
 
-    private Queue<String> randomClinicNames(int amount) {
-        Queue<String> result = new LinkedList<>();
-        Faker faker = new Faker();
+    private BlockingQueue<String> randomClinicNames(int amount) {
+        BlockingQueue<String> result = new ArrayBlockingQueue<>(amount);
         for (int i = 0; i < amount; i++) {
             result.add(faker.medical()
                     .hospitalName().replaceAll(" ", "{SPACE}"));
@@ -102,9 +104,9 @@ public class ClinicGenerator {
     public List<Clinic> generateClinics(final int clinicAmount) {
         LocalDate now = LocalDate.now();
         List<Clinic> clinics = new ArrayList<>();
-        Queue<String> names = randomNames(clinicAmount * 30);
-        Queue<String> addresses = randomAddresses(clinicAmount);
-        Queue<String> clinicNames = randomClinicNames(clinicAmount);
+        BlockingQueue<String> names = randomNames(clinicAmount * 30);
+        BlockingQueue<String> addresses = randomAddresses(clinicAmount);
+        BlockingQueue<String> clinicNames = randomClinicNames(clinicAmount);
 
         int days = YearMonth.now().lengthOfMonth() - now.getDayOfMonth() + 1 +
                 YearMonth.now().plusMonths(1).lengthOfMonth();
@@ -127,73 +129,116 @@ public class ClinicGenerator {
                 .setInitialMax(clinicAmount * 3L + days);
         ProgressBar pb = pbb.build();
 
-        ExecutorService executorService;
-        val async = (args.containsOption("async") &&
-                !args.getOptionValues("async").contains("off")) ||
-                args.getNonOptionArgs().contains("-async");
-        if (async) {
-            executorService = Executors.newWorkStealingPool();
-        } else executorService = Executors.newSingleThreadExecutor();
-
+        ExecutorService executorService = newExecutorService.call();
         for (var counter = new Object() {
             int i = 0;
         }; counter.i < clinicAmount; counter.i++) {
             executorService.execute(() -> {
-                Clinic clinic = new Clinic();
-                clinic.setName(clinicNames.poll());
-                val medicCount = ThreadLocalRandom.current().nextInt(8, 30 + 1);
-                pb.step();
+                try {
+                    Clinic clinic = new Clinic();
+                    clinic.setName(clinicNames.poll(15, TimeUnit.MINUTES));
+                    val medicCount = ThreadLocalRandom.current().nextInt(8, 30 + 1);
+                    pb.step();
 
-                for (int j = 0; j < medicCount; j++) {
-                    val name = Objects.requireNonNull(names.poll()).split(" ");
-                    Speciality[] medicSpecialities = new Speciality[1];
-                    val rand = ThreadLocalRandom.current().nextInt(0, 100 + 1);
-                    if (rand < 10) {
-                        medicSpecialities = new Speciality[3];
-                    } else if (rand < 30) {
-                        medicSpecialities = new Speciality[2];
-                    }
-
-                    for (int k = 0; k < medicSpecialities.length; k++) {
-                        val speciality = randomSpeciality();
-                        if (Arrays.stream(medicSpecialities).toList()
-                                .contains(speciality)) {
-                            k--;
-                            continue;
+                    for (int j = 0; j < medicCount; j++) {
+                        String[] name;
+                        name = Objects.requireNonNull(names.poll(15, TimeUnit.MINUTES)).split(" ");
+                        Speciality[] medicSpecialities = new Speciality[1];
+                        val rand = ThreadLocalRandom.current().nextInt(0, 100 + 1);
+                        if (rand < 10) {
+                            medicSpecialities = new Speciality[3];
+                        } else if (rand < 30) {
+                            medicSpecialities = new Speciality[2];
                         }
-                        medicSpecialities[k] = speciality;
-                    }
-                    val medic = new Medic(
-                            Arrays.stream(medicSpecialities).toList(),
-                            name[0], name[1], String
-                            .format("https://randomuser.me/api/portraits/%s/%d.jpg",
-                                    ThreadLocalRandom.current().nextInt(0, 2) == 0
-                                            ? "women" : "men",
-                                    ThreadLocalRandom.current().nextInt(0, 100)));
-                    for (Speciality medicSpeciality : medicSpecialities) {
-                        clinic.getEmployees().add(new Employee(medic, new Specialist(
-                                medicSpeciality,
-                                (short) ThreadLocalRandom.current().nextInt(100, 725 + 1),
-                                (short) ThreadLocalRandom.current().nextInt(6, 25 + 1),
-                                randomSchedule(),
-                                null,
-                                null
-                        )));
-                    }
-                }
-                pb.step();
 
-                val date = now.plusDays(counter.i);
-                val workingTime = new AtomicLong();
-                clinic.getEmployees().forEach(e -> {
-                    if (e.getSpecialist().getWorkingHours().get().get(date.getDayOfWeek()) != null) {
-                        workingTime.set(workingTime.get() +
-                                e.getSpecialist().getWorkingHours().sum(date.getDayOfWeek()));
+                        for (int k = 0; k < medicSpecialities.length; k++) {
+                            val speciality = randomSpeciality();
+                            if (Arrays.stream(medicSpecialities).toList()
+                                    .contains(speciality)) {
+                                k--;
+                                continue;
+                            }
+                            medicSpecialities[k] = speciality;
+                        }
+                        val medic = new Medic(
+                                Arrays.stream(medicSpecialities).toList(),
+                                name[0], name[1], String
+                                .format("https://randomuser.me/api/portraits/%s/%d.jpg",
+                                        ThreadLocalRandom.current().nextInt(0, 2) == 0
+                                                ? "women" : "men",
+                                        ThreadLocalRandom.current().nextInt(0, 100)));
+                        for (Speciality medicSpeciality : medicSpecialities) {
+                            clinic.getEmployees().add(new Employee(medic, new Specialist(
+                                    medicSpeciality,
+                                    (short) ThreadLocalRandom.current().nextInt(100, 725 + 1),
+                                    (short) ThreadLocalRandom.current().nextInt(6, 25 + 1),
+                                    randomSchedule(),
+                                    null,
+                                    null
+                            )));
+                        }
                     }
-                });
-                clinic.setAddress(addresses.poll());
-                clinic.setPhone(new Faker(new Locale("en-US")).phoneNumber().phoneNumber());
-                clinics.add(clinic);
+                    pb.step();
+
+                    val date = now.plusDays(counter.i);
+                    val workingTime = new AtomicLong();
+                    clinic.getEmployees().forEach(e -> {
+                        if (e.getSpecialist().getWorkingHours().get().get(date.getDayOfWeek()) != null) {
+                            workingTime.set(workingTime.get() +
+                                    e.getSpecialist().getWorkingHours().sum(date.getDayOfWeek()));
+                        }
+                    });
+                    clinic.setAddress(addresses.poll(15, TimeUnit.MILLISECONDS));
+                    clinic.setPhone(faker.phoneNumber().phoneNumber());
+                    clinics.add(clinic);
+                    pb.step();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+
+        executorService.shutdown();
+        if (!executorService.awaitTermination(clinicAmount * 3L, TimeUnit.SECONDS)) {
+            executorService.shutdownNow();
+        }
+        executorService = newExecutorService.call();
+
+        // fulfilling available tickets list
+        for (var counter = new Object() {
+            int i = 0;
+        }; counter.i < days; counter.i++) {
+            LocalDate date = now.plusDays(counter.i);
+            executorService.execute(() -> {
+                clinics.forEach(c -> c.getEmployees().forEach(e -> {
+                    val sp = e.getSpecialist();
+                    List<Ticket> tickets = new ArrayList<>();
+                    if (sp.getTickets() != null) tickets.addAll(sp.getTickets());
+                    if (sp.getWorkingHours().get().get(date.getDayOfWeek()) != null) {
+                        sp.getWorkingHours().get().get(date.getDayOfWeek())
+                                .forEach(period -> {
+                                    int ticketCount = (int) Math.ceil((float)
+                                            period.length(TimeUnit.MINUTES) /
+                                            sp.getMinutesPerPatient());
+                                    for (int j = 0; j < ticketCount; j++) {
+                                        LocalDateTime ticketDate = date
+                                                .atTime(period.begin().toLocalTime())
+                                                .plusMinutes(j * (long) sp.getMinutesPerPatient());
+                                        tickets.add(new Ticket(ticketDate, false));
+                                    }
+                                });
+                    }
+                    int maxErasedTickets = Math.round(tickets.size() * .85f);
+                    int erasedTickets = 0;
+                    for (int j = 0; j < tickets.size(); j++) {
+                        val rand = ThreadLocalRandom.current().nextInt(0, 100 + 1);
+                        if (rand > 96) {
+                            tickets.remove(j);
+                            if (++erasedTickets >= maxErasedTickets) break;
+                        }
+                    }
+                    sp.setTickets(tickets);
+                }));
                 pb.step();
             });
         }
@@ -203,35 +248,6 @@ public class ClinicGenerator {
             executorService.shutdownNow();
         }
 
-        // fulfilling available tickets list
-        for (int i = 0; i < days; i++) {
-            LocalDate date = now.plusDays(i);
-            clinics.forEach(c -> c.getEmployees().forEach(e -> {
-                val sp = e.getSpecialist();
-                List<Ticket> tickets = new ArrayList<>();
-                if (sp.getTickets() != null) tickets.addAll(sp.getTickets());
-                if (sp.getWorkingHours().get().get(date.getDayOfWeek()) != null) {
-                    sp.getWorkingHours().get().get(date.getDayOfWeek())
-                            .forEach(period -> {
-                                int ticketCount = (int) Math.ceil((float)
-                                        period.length(TimeUnit.MINUTES) /
-                                        sp.getMinutesPerPatient());
-                                for (int j = 0; j < ticketCount; j++) {
-                                    LocalDateTime ticketDate = date
-                                            .atTime(period.begin().toLocalTime())
-                                            .plusMinutes(j * (long) sp.getMinutesPerPatient());
-                                    tickets.add(new Ticket(ticketDate, false));
-                                }
-                            });
-                }
-                for (int j = 0; j < tickets.size(); j++) {
-                    val rand = ThreadLocalRandom.current().nextInt(0, 100 + 1);
-                    if (rand > 97) tickets.remove(j);
-                }
-                sp.setTickets(tickets);
-            }));
-            pb.step();
-        }
         if (clinicAmount == clinics.size()) {
             pb.stepTo(pb.getMax());
             pb.close();
@@ -246,7 +262,7 @@ public class ClinicGenerator {
 
     public List<Clinic> generateClinics() {
         if (args.containsOption("clinics-amount"))
-            return generateClinics(Math.min(500, (int) Math.round(Double.parseDouble(
+            return generateClinics(Math.min(Short.MAX_VALUE, (int) Math.round(Double.parseDouble(
                     args.getOptionValues("clinics-amount").get(0)))));
         return generateClinics(ThreadLocalRandom.current().nextInt(100, 500));
     }

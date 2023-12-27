@@ -6,6 +6,7 @@ tmp
 out-tsc
 bazel-out
 target
+release
 
 ### Test ###
 test
@@ -45,6 +46,7 @@ yarn-error.log
 ### Miscellaneous ###
 .angular
 .sass-cache
+.nx/
 .mvn
 mvnw
 mvnw.cmd
