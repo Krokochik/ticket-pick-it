@@ -7,7 +7,6 @@ import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import me.tongfei.progressbar.*;
-import org.openjdk.jol.info.ClassLayout;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -16,6 +15,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
@@ -120,13 +120,14 @@ public abstract class BaseRepositoryImpl<T> implements BaseRepository {
                 return CompletableFuture.completedFuture(false);
             }
         } else {
-            try {
-                ProgressBarBuilder pbb = new ProgressBarBuilder()
-                        .setTaskName("Writing")
-                        .setStyle(ProgressBarStyle.ASCII)
-                        .setUpdateIntervalMillis(100);
-
-                gson.toJson(data, ProgressBar.wrap(new FileWriter(file), pbb));
+            ProgressBarBuilder pbb = new ProgressBarBuilder()
+                    .setTaskName("Writing")
+                    .setStyle(ProgressBarStyle.ASCII)
+                    .setUpdateIntervalMillis(500)
+                    .setUnit("", 1048576)
+                    .hideEta();
+            try (Writer w = ProgressBar.wrap(new FileWriter(file), pbb)) {
+                gson.toJson(data, w);
             } catch (IOException e) {
                 log.error("Something went wrong during writing data to " + file.getAbsolutePath(), e);
                 return CompletableFuture.completedFuture(false);
