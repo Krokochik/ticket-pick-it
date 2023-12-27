@@ -45,6 +45,7 @@ yarn-error.log
 ### Miscellaneous ###
 .angular
 .sass-cache
+.nx/
 .mvn
 mvnw
 mvnw.cmd

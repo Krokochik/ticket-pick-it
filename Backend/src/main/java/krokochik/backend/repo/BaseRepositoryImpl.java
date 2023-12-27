@@ -7,6 +7,7 @@ import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import me.tongfei.progressbar.*;
+import org.openjdk.jol.info.ClassLayout;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -15,9 +16,6 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.file.Files;
-import java.nio.file.OpenOption;
-import java.nio.file.StandardOpenOption;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
@@ -93,19 +91,19 @@ public abstract class BaseRepositoryImpl<T> implements BaseRepository {
         }
 
         log.info("Serializing data");
-        String serialized = gson.toJson(data);
+        if (async) {
+            String serialized = gson.toJson(data);
 
-        Unit unit = defineUnit(serialized.getBytes().length);
-        ProgressBarBuilder pbb = new ProgressBarBuilder()
-                .setTaskName("Writing")
-                .setUnit(unit.name, unit.size)
-                .setStyle(ProgressBarStyle.ASCII)
-                .setUpdateIntervalMillis(100)
-                .setInitialMax(serialized.getBytes().length);
+            Unit unit = defineUnit(serialized.getBytes().length);
+            ProgressBarBuilder pbb = new ProgressBarBuilder()
+                    .setTaskName("Writing")
+                    .setUnit(unit.name, unit.size)
+                    .setStyle(ProgressBarStyle.ASCII)
+                    .setUpdateIntervalMillis(100)
+                    .setInitialMax(serialized.getBytes().length);
 
-        try (RandomAccessFile raf = new RandomAccessFile(file, "rw");
-             FileChannel channel = raf.getChannel()) {
-            if (async) {
+            try (RandomAccessFile raf = new RandomAccessFile(file, "rw");
+                 FileChannel channel = raf.getChannel()) {
                 ProgressBar pb = pbb.build();
 
                 MappedByteBuffer buffer = channel.map(
@@ -117,17 +115,22 @@ public abstract class BaseRepositoryImpl<T> implements BaseRepository {
                 }
                 buffer.force();
                 pb.close();
-            } else {
-                try (Writer writer = ProgressBar.wrap(new FileWriter(file), pbb)) {
-                    writer.write("");
-                    for (char c : serialized.toCharArray()) {
-                        writer.append(c);
-                    }
-                }
+            } catch (IOException e) {
+                log.error("Something went wrong during writing data to " + file.getAbsolutePath(), e);
+                return CompletableFuture.completedFuture(false);
             }
-        } catch (IOException e) {
-            log.error("Something went wrong during writing data to " + file.getAbsolutePath(), e);
-            return CompletableFuture.completedFuture(false);
+        } else {
+            try {
+                ProgressBarBuilder pbb = new ProgressBarBuilder()
+                        .setTaskName("Writing")
+                        .setStyle(ProgressBarStyle.ASCII)
+                        .setUpdateIntervalMillis(100);
+
+                gson.toJson(data, ProgressBar.wrap(new FileWriter(file), pbb));
+            } catch (IOException e) {
+                log.error("Something went wrong during writing data to " + file.getAbsolutePath(), e);
+                return CompletableFuture.completedFuture(false);
+            }
         }
         log.info("Data is successfully written to " + file.getAbsolutePath());
         return CompletableFuture.completedFuture(true);

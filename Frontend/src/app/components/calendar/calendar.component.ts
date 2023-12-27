@@ -130,18 +130,20 @@ export class CalendarComponent extends ComponentDef implements OnInit, OnDestroy
     }
 
     formatDays() {
-        if (document.body.offsetWidth > 768) {
-            this.days.forEach((day: any) => {
-                day.viewDate = formatDate(day.date, "EEEE", "en-US"); // Tuesday
-            });
-        } else if (document.body.offsetWidth > 320) {
-            this.days.forEach((day: any) => {
-                day.viewDate = formatDate(day.date, "E", "en-US"); // Tue
-            });
-        } else {
-            this.days.forEach((day: any) => {
-                day.viewDate = formatDate(day.date, "EEEEEE", "en-US"); // Tu
-            });
+        if (this.days) {
+            if (document.body.offsetWidth > 768) {
+                this.days.forEach((day: any) => {
+                    day.viewDate = formatDate(day.date, "EEEE", "en-US"); // Tuesday
+                });
+            } else if (document.body.offsetWidth > 320) {
+                this.days.forEach((day: any) => {
+                    day.viewDate = formatDate(day.date, "E", "en-US"); // Tue
+                });
+            } else {
+                this.days.forEach((day: any) => {
+                    day.viewDate = formatDate(day.date, "EEEEEE", "en-US"); // Tu
+                });
+            }
         }
     }
 
